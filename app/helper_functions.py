@@ -464,3 +464,34 @@ def build_on_planet(status, planet, building_list_dict):
 
     return msg
 
+def color_code(color):
+    if color=="R":
+        return (255,0,0)
+    elif color=="B":
+        return (0,0,255)
+    elif color=="G":
+        return (0,255,0)
+    elif color=="O":
+        return (255,165,0)
+    elif color=="Y":
+        return (255,255,0)
+    elif color=="I":
+        return (75,0,130)
+    elif color=="V":
+        return (238,130,238)
+    elif color=="P":
+        return (255,192,203)
+    elif color=="W":
+        return (255,255,255)
+    return (0,0,0)
+
+def clamp(x): 
+  return max(0, min(x, 255))
+
+def hex_format(x):
+    r,g,b = x
+    return "#{0:02x}{1:02x}{2:02x}".format(clamp(r), clamp(g), clamp(b))
+
+def sum_tuple(a,b):
+    return tuple(item1 + item2 for item1, item2 in zip(a, b))
+
