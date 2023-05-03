@@ -511,8 +511,9 @@ def map(request):
     prevx=""
     prevy=""
     for p in planets:
+        key=p.x*10000+p.y
         if p.home_planet:
-            mapgen[p.x*10000+p.y]["type"]=5
+            mapgen[key]["type"]=5
         if p.x != prevx or p.y != prevy:
             count = 0
             ownercount = 0
@@ -527,36 +528,33 @@ def map(request):
             if setting.map_setting == "UE" and unexcount == 0:
                 if p.owner == None:
                     unexcount += 1
-                    print(sum_tuple(color,mapgen[p.x*10000+p.y]["color"]))
-                    mapgen[p.x*10000+p.y]["color"]=sum_tuple(color,mapgen[p.x*10000+p.y]["color"])
+                    mapgen[key]["color"]=sum_tuple(color,mapgen[key]["color"])
         
             if setting.map_setting == "YP" and ownercount == 0:
                 if p.owner == status.user:
                     ownercount += 1
-                    print(sum_tuple(color,mapgen[p.x*10000+p.y]["color"]))
-                    mapgen[p.x*10000+p.y]["color"]=sum_tuple(color,mapgen[p.x*10000+p.y]["color"])
+                    mapgen[key]["color"]=sum_tuple(color,mapgen[key]["color"])
         
             if setting.map_setting == "YR" and porcount == 0:
                 if p.owner == status.user and p.portal == True:
                     porcount += 1
-                    print(sum_tuple(color,mapgen[p.x*10000+p.y]["color"]))
-                    mapgen[p.x*10000+p.y]["color"]=sum_tuple(color,mapgen[p.x*10000+p.y]["color"])
+                    mapgen[key]["color"]=sum_tuple(color,mapgen[key]["color"])
                 
             if setting.map_setting == "PF" and factcount == 0:
                 if p.owner != None and p.owner.id == setting.faction.id:
                     factcount += 1
-                    print(sum_tuple(color,mapgen[p.x*10000+p.y]["color"]))
-                    mapgen[p.x*10000+p.y]["color"]=sum_tuple(color,mapgen[p.x*10000+p.y]["color"])
+                    mapgen[key]["color"]=sum_tuple(color,mapgen[key]["color"])
         
             if setting.map_setting == "SC":
                 if (str(p.x)+","+str(p.y)) in scouted_planets_dict:
                    pcount += 1
-                   mapgen[p.x*10000+p.y]["color"]=sum_tuple(color,mapgen[p.x*10000+p.y]["color"])
+                   mapgen[key]["color"]=sum_tuple(color,mapgen[key]["color"])
 
     for s in systems:
-        if mapgen[s.x*10000+s.y]["color"] == (0,0,0):
-            mapgen[s.x*10000+s.y]["color"]=(155,155,155)
-        mapgen[s.x*10000+s.y]["color"]=hex_format(mapgen[s.x*10000+s.y]["color"])    
+        key = s.x*10000+s.y
+        if mapgen[key]["color"] == (0,0,0):
+            mapgen[key]["color"]=(155,155,155)
+        mapgen[key]["color"]=hex_format(mapgen[key]["color"])    
 
     artis = Planet.objects.all().exclude(artefact=None)
     narti = []
