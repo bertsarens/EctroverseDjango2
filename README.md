@@ -4,7 +4,6 @@ Put your name after an item if you want to reserve it for yourself, not all item
 
 #### v0.1 Remaining Items
 left to do:
-- incantations
 - any bugs?
 - email password recovery
 - new player tutorial
