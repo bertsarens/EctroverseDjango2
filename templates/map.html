@@ -5,18 +5,18 @@
 {% load mathfilters %}
 {% load tags %}
 <div id="mapdiv" style="background: black">
-  <svg version="1.0" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 {{ maxX|mul:24|add:24 }} {{ maxY|mul:24|add:24}}" height="80%"
-    width="100%">
+  <svg version="1.0" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 {{ maxX|mul:12|add:24 }} {{ maxY|mul:12|add:24}}" height="60%"
+    width="80%">
     {% for key in mapgen %}
     {% with o=mapgen|getvalue:key %}
     <a xlink:href="system{{ o.id }}">
       {% if o.imgarti != "" %}
-      <image href="{{o.imgarti}}" height="24" width="24" x="{{ o.x|mul:24 }}" y="{{ o.y|mul:24 }}">
+      <image href="{{o.imgarti}}" height="12" width="12" x="{{ o.x|mul:12 }}" y="{{ o.y|mul:12 }}">
         <title>{{ o.x }}, {{ o.y }}</title>
       </image>
       {% else %}
       <g xmlns="http://www.w3.org/2000/svg" fill="{{ o.color }}"
-        transform="translate({{ o.x|mul:24 }},{{ o.y|mul:24 }}) scale(0.100000,0.100000)" stroke="none">
+        transform="translate({{ o.x|mul:12 }},{{ o.y|mul:12 }}) scale(0.050000,0.0500000)" stroke="none">
         {% if o.type == 5 %}
         <path
           d="M39 232 c-21 -2 -28 -10 -31 -33 -3 -16 -1 -32 4 -35 4 -3 8 8 8 25 0 26 4 30 33 33 17 2 28 5 22 8 -5 3 -22 4 -36 2z" />
