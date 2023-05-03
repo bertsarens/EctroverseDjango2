@@ -549,7 +549,7 @@ def map(request):
                     mapgen[p.x*10000+p.y]["color"]=sum_tuple(color,mapgen[p.x*10000+p.y]["color"])
         
             if setting.map_setting == "SC":
-                if (str(scouted_planet.planet.x)+","+str(scouted_planet.planet.y)) in scouted_planets_dict:
+                if (str(p.x)+","+str(p.y)) in scouted_planets_dict:
                    pcount += 1
                    mapgen[p.x*10000+p.y]["color"]=sum_tuple(color,mapgen[p.x*10000+p.y]["color"])
 
