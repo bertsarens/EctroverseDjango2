@@ -9,7 +9,6 @@ urlpatterns = [
     path('headquarters', views.headquarters, name='headquarters'),
     path('council', views.council, name='council'),
     path('map', views.map, name='map'),
-    path('smap', views.smap, name='smap'),
     path('planets', views.planets, name='planets'),
     re_path(r'^planet(?P<planet_id>[0-9]+)/$', views.planet, name='planet'),
     re_path(r'^system(?P<system_id>[0-9]+)/$', views.system, name='system'),
