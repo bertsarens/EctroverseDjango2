@@ -97,7 +97,7 @@ DATABASES = {
         'NAME': 'djangodatabase',
         'USER': 'dbadmin',
         'PASSWORD': os.getenv('DBPASS'), # defined in .env
-        'HOST': '77.68.120.85', # matches name in docker-compose
+        'HOST': 'db', # matches name in docker-compose
         'PORT': '5432',
     }
 }
