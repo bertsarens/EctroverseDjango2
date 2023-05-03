@@ -70,14 +70,7 @@ class Command(BaseCommand): # must be called command, use file name to name the 
         game_round.is_running = False
         game_round.round_number += 1
         game_round.artetimer = 1440
-        game_round.save()
-        bot_settings = Bot.objects.filter().first()
-        bot_settings.year = 25
-        bot_settings.ob = 1
-        bot_settings.oba = 300
-        bot_settings.save()
-
-		
+        game_round.save()		
 
         # We also need to purge all the non-needed info of players, without actualy deleting them!
         theta = 0
