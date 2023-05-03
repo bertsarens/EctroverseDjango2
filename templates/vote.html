@@ -1,0 +1,19 @@
+{% extends "base.html" %}
+
+{% load static %}
+
+{% block content %}
+<br>
+<form action="/vote" method="post">
+{% csrf_token %}
+{% for player in player_list %}
+<label for="choice{{ forloop.counter }}">{{ player.user_name }}</label>
+<input type="radio" name="choice" value="{{player.id}}"><br>
+{% endfor %}
+<input type="submit" value="Vote">
+</form>
+<br>
+<a href="/results">See results</a>
+
+
+{% endblock %}

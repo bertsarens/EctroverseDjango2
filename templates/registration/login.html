@@ -1,0 +1,102 @@
+{% extends "front_page.html" %}
+
+{% load static %}
+
+{% block content %}
+
+  {% if form.errors %}
+    <p>Your username and password didn't match. Please try again.</p>
+  {% endif %}
+  
+  {% if next %}
+    {% if user.is_authenticated %}
+      <p>Your account doesn't have access to this page. To proceed,
+      please login with an account that has access.</p>
+    {% else %}
+		
+    {% endif %}
+  {% endif %}
+  
+  {% if errors %}
+  
+  <p align="center">{{errors}}</p>
+  {% endif %}
+
+  
+<div style="width:100%; float:left ">
+
+
+	<div class="display_box_wrapper front_login" style =" margin: 10px auto;">
+		{% include "box_top.html" with heading="Login" width="220px" textalign="left" %}
+	
+		<form method="post" action="/login" style =" margin: 0 5px;">
+		  {% csrf_token %}
+		  <div class="login_form" >
+			  <label>
+			  Username:
+			  <input id="id_username" maxlength="60" name="username" type="text" style="width:100%">
+			  </label>
+			  
+			  <label>
+			  Password:
+			  <input id="id_password" name="password" type="password" style="width:100%">
+			  </label>
+		  </div>
+
+		  <input type="submit" value="Login" style="margin-top: 10px">
+		  <input type="hidden" name="next" value="{{ next }}" />
+		</form> 
+		{# Assumes you setup the password_reset view in your URLconf #}
+		<p><a href="{% url 'password_reset' %}" style ="margin: 0 5px;">Lost password?</a></p>
+
+		{% include "box_bottom.html" %}
+	</div>
+	
+  <div class="front_news" style ="margin: 0 auto; text-align:center;">
+	{% for news in news_feed %}
+
+	 {% include "box_top.html" with heading=news.date_and_time %}
+		
+		<div style="padding-left:10px;">{{news.message | safe | linebreaks}}</div>
+		{% include "box_bottom.html" %}
+
+		{% if forloop.counter == 3 %}
+		<a onclick="showNews()" id="news_button" style="margin: 0 auto;">Read more</a>
+		<div id = "news_more" style= "display: none;">
+		
+		{% endif %}
+		
+		{% if forloop.last %}
+		</div>
+		{% endif %}
+	
+	{% endfor %}
+
+  </div>
+  
+    <script>
+	function showNews() {
+	  var moreText = document.getElementById("news_more");
+	  var btnText = document.getElementById("news_button");
+
+	  if (moreText.style.display === "none") {
+	  	btnText.innerHTML = "Read less"; 
+		moreText.style.display = "block";
+
+	  } else {
+		btnText.innerHTML = "Read more"; 
+		moreText.style.display = "none";
+	  }
+	}
+	</script>
+
+	
+</div>
+
+  
+{% endblock %}
+
+  
+
+  
+

@@ -1,0 +1,156 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+
+{{msg}}<br>
+
+
+<div style="width:100%; float:left; ">
+	<div class ="left_box" >
+		<div style="width: 50%; margin:0 auto; text-align: left;">
+			<table>
+			<tr><td><b>Energy</b></td><td>&nbsp;</td></tr>
+			<tr><td>Production</td><td align="right" id="energyproduction">+{{status.energy_production}}</td></tr>
+			<tr><td>Decay</td><td align="right" id="energydecay">-{{status.energy_decay}}</td></tr>
+			<tr><td>Buildings upkeep</td><td align="right" id="buildingupkeep">-{{status.buildings_upkeep}}</td></tr>
+			<tr><td>Units upkeep</td><td align="right" id="unitupkeep">-{{status.units_upkeep}}</td></tr>
+			<tr><td>Portals upkeep</td><td align="right" id="portalsupkeep">-{{status.portals_upkeep}}</td></tr>
+			<tr><td>Population reduction</td><td align="right" id="populationreduction">+{{status.population_upkeep_reduction}}</td></tr>
+			{% if status.race == 'WK' %}
+				<tr><td>Interest</td><td align="right" id="energyinterest">+{{status.energy_interest}}</td></tr>
+			{% endif %}
+			{% if status.energy_specop_effect != 0 %}
+			<tr><td>Specops net flow</td><td align="right" id="energyincome" 
+			{% if  status.energy_specop_effect < 0 %} 
+				style="color:red"> 
+			{% else %}
+				>+
+			{% endif %}
+			
+			{{status.energy_specop_effect}}</td></tr>
+			{% endif %}
+			<tr><td>Energy income</td><td align="right" id="energyincome" {% if status.energy_income < 0 %} style="color:red"> 
+			{% else %}>+{% endif %}{{status.energy_income}}</td></tr>
+			</table>
+		</div>
+
+	</div>
+	<div class ="right_box" >
+		<div style="width: 50%; margin:0 auto; text-align: left;">
+			<table>
+				<tr><td><b>Resources</b></td><td>&nbsp;</td></tr>
+				{% if status.race == 'WK' %}
+				<tr><td>Mineral produced</td><td align="right" id="mineralproduction">+{{status.mineral_production}}</td></tr>
+				<tr><td>Mineral interest</td><td align="right" id="mineralinterest">+{{status.mineral_interest}}</td></tr>
+				{% endif %}
+				<tr><td>Mineral income</td><td align="right" id="mineralincome">+{{status.mineral_income}}</td></tr>
+				<tr><td>Crystal production</td><td align="right" id="crystalproduction">+{{status.crystal_production}}</td></tr>
+				<tr><td>Crystal decay</td><td align="right" id="crystaldecay">-{{status.crystal_decay}}</td></tr>
+				{% if status.race == 'WK' %}
+				<tr><td>Crystal interest</td><td align="right" id="crystalinterest">+{{status.crystal_interest}}</td></tr>
+				{% endif %}
+				<tr><td>Crystal income</td><td align="right" id="crystalincome" {% if status.crystal_income < 0 %} style="color:red"> {% else %}>+{% endif %}{{status.crystal_income}}</td></tr>
+				{% if status.race == 'WK' %}
+				<tr><td>Ectrolium produced</td><td align="right" id="ectroliumproduction">+{{status.ectrolium_production}}</td></tr>
+				<tr><td>Ectrolium interest</td><td align="right" id="ectroliuminterest">+{{status.ectrolium_interest}}</td></tr>
+				{% endif %}
+				<tr><td>Ectrolium income</td><td align="right" id="ectroliumincome">+{{status.ectrolium_income}}</td></tr>
+				</table><br><br>{% if status.race != 'WK' %}<br> {% endif %}{% if status.energy_specop_effect != 0 %}<br>{% endif %}
+		</div>
+	</div>
+	<div class ="left_box" >
+		<div style="width: 50%; margin:0 auto; text-align: left;">
+			<b>Buildings</b>
+			<br>
+			<table>
+			<tr><td>Solar Collectors</td><td>&nbsp;&nbsp;</td><td align="right">{{status.total_solar_collectors}}</td></tr>
+			<tr><td>Fission Reactors</td><td>&nbsp;&nbsp;</td><td align="right">{{status.total_fission_reactors}}</td></tr>
+			<tr><td>Mineral Plants</td><td>&nbsp;&nbsp;</td><td align="right">{{status.total_mineral_plants}}</td></tr>
+			<tr><td>Crystal Laboratories</td><td>&nbsp;&nbsp;</td><td align="right">{{status.total_crystal_labs}}</td></tr>
+			<tr><td>Refinement Stations</td><td>&nbsp;&nbsp;</td><td align="right">{{status.total_refinement_stations}}</td></tr>
+			<tr><td>Cities</td><td>&nbsp;&nbsp;</td><td align="right">{{status.total_cities}}</td></tr>
+			<tr><td>Research Centers</td><td>&nbsp;&nbsp;</td><td align="right">{{status.total_research_centers}}</td></tr>
+			<tr><td>Defense Satellites</td><td>&nbsp;&nbsp;</td><td align="right">{{status.total_defense_sats}}</td></tr>
+			<tr><td>Shield Network</td><td>&nbsp;&nbsp;</td><td align="right">{{status.total_shield_networks}}</td></tr>
+			<tr><td>Portals</td><td>&nbsp;&nbsp;</td><td align="right">{{status.total_portals}}</td></tr>
+			<tr><td>Total</td><td>&nbsp;&nbsp;</td><td align="right">{{status.total_buildings}}</td></tr>
+			</table><br><br>
+
+
+			<b>Buildings under construction</b><br><span id="council_build_que">
+			<form name="cancel_build" id="cancel_build" action="/council"  method="POST"><table>
+			{% csrf_token %}
+			{% for construction in constructions %}
+			    <tr><td>
+			    {{construction.n}} {{construction.get_building_type_display}}
+			    in {{construction.ticks_remaining}} weeks
+			    at <a href="/planet{{construction.planet.id}}">{{construction.planet.x}},{{construction.planet.y}}:{{construction.planet.i}}</a>
+			    </td><td><input type="checkbox" name="cancel_build" value="{{construction.id}}"></td></tr>
+			{% endfor %}
+			<tr>
+			    <td></td>
+			    <td><div class="href" onclick="toggleForm('cancel_build');">Toggle</font></div></td>
+			</tr>
+			<tr>
+			    <td></td>
+			    <td><input type="submit" value="Cancel"></td>
+			</tr></table></form>
+
+			<br><i>Summary</i><br>
+
+			{% if not construction_sum %}
+			No buildings under construction
+			{% else %}
+				{% for building, num in construction_sum.items %}
+					{{building}} - {{num}}<br>
+				{% endfor %}
+			{% endif %}
+			</span></td>
+		</div>
+
+	</div>
+	<div class ="right_box" >
+		<div style="width: 50%; margin:0 auto; text-align: left;">
+			<td align="center" valign="top">
+			<b>Units</b><br><table>
+			{% for unit in main_fleet %}
+			    <tr><td>
+			    {{unit.name}} </td>
+				<td>{{unit.value}}</td>
+				</tr>
+			{% endfor %}
+
+			<tr><td><b>Total</b></td><td id="untnum">{{unit_total}}</td></tr></table><br><br>
+			<b>Units under construction</b><br><span id="council_unit_que">
+			<form name="cancel_units" id="cancel_units" action="/council" method="POST"><table>
+			{% csrf_token %}
+			{% for unit in built_fleet %}
+			    <tr>
+				<td>{{unit.n}}</td>
+			    <td>{{unit.get_unit_type_display}}</td>
+				<td>in {{unit.ticks_remaining}} weeks</td>
+				</td><td><input type="checkbox" name="cancel_unit" value="{{unit.id}}"></td></tr>
+				</tr>
+			{% endfor %}
+
+
+			<tr><td></td><td><div class="href" onclick="toggleForm('cancel_units');">Toggle</font></div></td></tr>
+			<tr><td></td><td><input type="submit" value="Cancel"></td></tr></table></form>
+
+
+			<br><i>Summary</i><br>
+			{% if not fleets_sum %}
+			No units under construction
+			{% else %}
+				{% for unit, num in fleets_sum.items %}
+					{{unit}} - {{num}}<br>
+				{% endfor %}
+			{% endif %}
+
+</span></td></tr></table>
+</div>
+</div>
+</div>
+
+{% endblock %}

@@ -1,0 +1,42 @@
+{% extends "index.html" %}
+
+{% block content %}
+{% load static %}
+
+<head>
+</head>
+
+<body>
+{% for tests in testis %}	
+  <main class="testimonial-grid">
+	{% if forloop.counter|divisibleby:"2" %}
+    <article class="testimonial2">
+      <div class="flex">
+        <div>
+          <h1 class="name"><strong>{{tests.name}}</strong></h1>
+        </div>
+      </div>
+      <p1>
+        "{{tests.message}}"
+      </p1>
+    </article>
+	{% else %}
+    <article class="testimonial">
+      <div class="flex">
+        <div>
+          <h1 class="name"><strong>{{tests.name}}</strong></h1>
+        </div>
+      </div>
+      <p1>
+        "{{tests.message}}"
+      </p1>
+    </article>
+    {% endif %}	
+  </main>
+{% endfor %}
+
+
+
+</body>
+{% endblock %}
+</html>

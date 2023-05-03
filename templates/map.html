@@ -1,0 +1,147 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+{% load mathfilters %}
+
+<div id="mapdiv" style="background-color:black;"></div>	
+<script>
+  const width = 130;
+  const height = 130;
+  const circle_radius = 0.5;
+
+  const zoom = d3.zoom()
+      .scaleExtent([1, 30]) // max zoom out, max zoom in
+      .on("zoom", zoomed);
+
+  const svg = d3.select("#mapdiv")
+    .append("div")
+    .append("svg")
+    .style("height", '80vh')
+    .style("width", '100%')
+    .attr("preserveAspectRatio", "xMidYMin meet") // see here for a nice graphic https://developer.mozilla.org/en-US/docs/Web/SVG/Attribute/preserveAspectRatio
+    .attr("viewBox", [-1, -1, width+1, height+1]) // default view
+
+  const g = svg.append("g");
+
+	
+
+{% for planet in mapgen %}
+	{% if planet.s == "SC" %}
+	g.append("ellipse")
+                .attr("cx", ({{planet.x}}-9.88))
+                .attr("cy", ({{planet.y}}-9.88))
+                .attr("rx", circle_radius+0.15)
+                .attr("ry", circle_radius+0.15)
+                .style("stroke", "{{planet.c}}")
+                .style("stroke-width", "0.1")
+                .style("fill", "none")
+                .style("opacity", 1)
+	{% elif planet.s == "YR" %}
+	g.append("ellipse")
+                .attr("cx", ({{planet.x}}-9.88))
+                .attr("cy", ({{planet.y}}-9.88))
+                .attr("rx", circle_radius+0.05)
+                .attr("ry", circle_radius+0.05)
+                .style("stroke", "{{planet.c}}")
+                .style("stroke-width", "0.1")
+                .style("fill", "none")
+                .style("opacity", 1)
+	{% elif planet.s != "MG" and planet.s != "YR" and planet.s != "SC"%}
+	g.append("circle")
+                .attr("cx", ({{planet.x}}-9.88))
+                .attr("cy", ({{planet.y}}-9.88))
+                .attr("r", circle_radius)
+                .style("fill", "{{planet.c}}")
+                .style("opacity", 0.6)
+	{% endif %}
+	{% if planet.s == "MG" %}
+	g.append("a")
+	  	.attr("xlink:href", "system{{planet.id}}")
+	  	.append("ellipse")
+				.attr("cx", ({{planet.x}}-9.88))
+	    		.attr("cy", ({{planet.y}}-9.88))
+                .attr("rx", 0.15)
+                .attr("ry", 0.15)
+                .style("fill", "Orange")
+                .style("opacity", 1)
+	    		.append("title") // hover-over text
+	    		.text("{{planet.x}},{{planet.y}}");
+
+	  g.append("text")
+	    .attr("x", ({{planet.x}}-9.88))
+	    .attr("y", ({{planet.y}})-9.6)
+	    .attr("font-family", "sans-serif")
+	    .attr("font-size", "0.2px")
+	    .attr("fill", "white")
+	    .attr("text-anchor", "middle") // horizontal centering
+	    .attr("allignment-baseline", "after-edge") // vertical centering
+	    .style("pointer-events", "none")
+	    .style("visibility", "visible") // changes in zoom
+	    .text("{{planet.x}},{{planet.y}}");
+	{% endif %}
+	
+{% endfor %}
+{% for scouting in narti %}
+            g.append("ellipse")
+                .attr("cx", ({{scouting.x}}-9.88))
+                .attr("cy", ({{scouting.y}}-9.88))
+                .attr("rx", circle_radius+0.25)
+                .attr("ry", circle_radius+0.25)
+                .style("stroke", "Gold")
+                .style("stroke-width", "0.15")
+                .style("fill", "none")
+                .style("opacity", 1) 
+	{% endfor %}
+
+
+ svg.call(zoom);
+
+  function reset() {
+    svg.transition().duration(750).call(
+      zoom.transform,
+      d3.zoomIdentity,
+      d3.zoomTransform(svg.node()).invert([width / 2, height / 2])
+    );
+  }
+
+
+  function clicked(d,i) {
+    //const [[x0, y0], [x1, y1]] = path.bounds(d);
+    console.log(d); // coming back as undefined for circles
+    console.log(i); // come back as 0 for every circle
+    d3.event.stopPropagation();
+    svg.transition().duration(750).call(
+      zoom.transform,
+      d3.zoomIdentity
+        .translate(width / 2, height / 2)
+        .scale(Math.min(8, 0.9 / Math.max(circle_radius / width, circle_radius / height)))
+        .translate(-width, -height),
+      d3.mouse(svg.node())
+    );
+  }
+
+
+  function zoomed() {
+    const {transform} = d3.event;
+    g.attr("transform", transform);
+    if (transform.k < 6) {
+		g.selectAll("circle")
+           .attr("rx", circle_radius)
+           .attr("ry", circle_radius)
+           .attr("r", circle_radius*2)
+         g.selectAll("text")
+           .style("visibility", "hidden");
+         
+     } else {
+         g.selectAll("circle")
+           .attr("r", circle_radius)
+         g.selectAll("text")
+           .style("visibility", "visible");
+    }
+  }
+
+</script>
+
+
+{% endblock %}

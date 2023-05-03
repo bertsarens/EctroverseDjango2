@@ -1,0 +1,63 @@
+{% extends "base.html" %}
+
+{% load static %}
+
+{% block content %}
+{% if status.empire.id == empire.id %}
+<br>
+<a href="/vote">Change your vote</a> -
+{% if status.empire_role == "PM" %}
+<a href="/pm_options">Prime Minister Options</a>
+{% endif %}
+{% endif %}
+
+{% if empire.empire_image  %}
+<br>
+<img src="/media/{{empire.empire_image}}"
+     style="max-width:600px;width:100%,max-height:800px,height:100%"
+     alt="empire{{empire.id}}_picture">
+{% endif %}
+
+<table style= "border-spacing: 10px; border-collapse: separate; margin-left: auto; margin-right: auto;" } >
+<tr><td></td>
+<td><b>Name</b></td>
+<td>Race</td>
+<td>Planets</td>
+<td>Networth</td></tr>
+{% for player in player_list %}
+<tr>
+<td>{{status.get_empire_role_display}}</td>
+    <td>
+    {%if player.id == 1 %}<b><a href= "/account{{player.id}}" style="color:Yellow;">{{player.user_name}}</a></b>
+    {% elif player.id == status.id %} <b><a href= "/account{{player.id}}" style="color:#0293FF;">{{player.user_name}}</a></b>
+    {% elif player.empire_role == "PM" %} <b><a href= "/account{{player.id}}" style="color:Green;">{{player.user_name}}</a></b>
+    {% elif player.empire_role == "VM" %} <b><a href= "/account{{player.id}}" style="color:Orange;">{{player.user_name}}</a></b>
+    {% elif player.empire_role == "I" %} <b><a href= "/account{{player.id}}" style="color:Red;">{{player.user_name}}</a></b>
+    {% else %} <b><a href= "/account{{player.id}}">{{player.user_name}}</a></b>
+    {% endif %}
+    </td>
+<td><a href= "/races" >{{player.get_race_display}}</a></td>
+<td>{{player.num_planets }}</td>
+<td>{{player.networth}}</td>
+{# status - online? #}
+<br>
+</tr>
+{% endfor %}
+</table>
+<br>
+{% for arti in artefacts %}
+	{% if status.empire == empire or artis >= 4 or status.id == 1 %}
+<img src="{{arti.image}}" alt="{{arti.name}}" title="{{arti.name}}"></td> 
+{{arti.name}} -  {{ arti.description }}<br> 
+	{% endif %}	
+{% for a in artecount %}
+{{a}}
+{% endfor %}	
+{% endfor %}
+
+<br>
+{% if player.empire.id == empire.id %}
+
+{% endif %}
+
+{% endblock %}

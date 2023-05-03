@@ -1,0 +1,52 @@
+{% extends "base.html" %}
+
+{% load static %}
+
+{% block content %}
+
+<style type="text/css">
+
+.row1{}
+
+.row2{
+display: table-row;
+background-color: rgb(25,38,51);
+}
+
+</style>
+<br>
+
+<table style="width:100%;">
+<tr>
+
+<td></td>
+<td><u>Player</u></td>
+<td><u>Empire</u></td>
+<td><u>Planets</u></td>
+<td><u>Networth</u></td>
+<td><u>Race</u></td>
+
+</tr>
+{% for values in table %}
+<tr class="{% cycle 'row2' 'row1' %}">
+<td>{{forloop.counter}}</td>
+<td>
+    {%if values.id == 1 %}<b><a href= "/account{{values.id}}" style="color:Yellow;">{{values.user_name}}</a></b>
+    {%elif values.id == status.id %}<b><a href= "/account{{values.id}}" style="color:#0293FF;">{{values.user_name}}</a></b>
+    {% else %} <b><a href= "/account{{values.id}}" >{{values.user_name}}</a></b>
+    {% endif %}
+</td>
+<td>
+    {%if values.empire.number == 0 %}<b><a href= "/empire{{values.empire_id}}" style="color:Yellow;">Administration #0</a></b>
+    {%elif values.empire.number == status.empire.number %}<b><a href= "/empire{{values.empire_id}}" style="color:#0293FF">{{values.empire.name_with_id}}</a></b>
+    {% else %} <b><a href = "/empire{{values.empire_id}}" >{{values.empire.name_with_id}}</a></b>
+    {% endif %}
+</td>
+<td>{{values.num_planets}}</td>  
+<td>{{values.networth}}</td> 
+<td>{{values.get_race_display}}</td> 
+</tr>
+{% endfor %}
+</table>
+
+{% endblock %}

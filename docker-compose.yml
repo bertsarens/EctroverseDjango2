@@ -1,0 +1,43 @@
+version: '3'
+
+services:
+  nginx:
+      image: nginx:1.19
+      ports:
+        - "8000:8000" # 8000 on the host machine points to 8000 inside nginx container
+      volumes:
+        - ./project/nginx/conf:/etc/nginx/conf.d
+        - ./project/nginx/uwsgi_params:/etc/nginx/uwsgi_params
+        - ./static:/static
+      depends_on:
+        - python
+
+      
+
+  db:
+      image: postgres:12.0-alpine
+      ports:
+        - "5432:5432"
+      env_file:
+        - .env # copy .env.template to .env and change passwords/keys
+      volumes:
+      - postgres_data:/var/lib/postgresql/data/
+      environment:
+        POSTGRES_DB: djangodatabase
+        POSTGRES_USER: dbadmin
+        POSTGRES_PASSWORD: ${DBPASS} # defined in .env
+
+  python:
+      build: ./project
+      command: uwsgi --socket :8001 --module project.wsgi --py-autoreload 1 --logto /tmp/mylog.log
+      volumes:
+        - .:/code
+        - ./static:/static
+      expose:
+        - "8001" # this is used for the uwsgi to nginx interface, not the actual website
+      depends_on:
+        - db
+
+# To persist the data beyond the life of the container we configured a volume. This config will bind postgres_data to the "/var/lib/postgresql/data/" directory in the container.
+volumes:
+  postgres_data:

@@ -1,0 +1,97 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<head>
+
+  <script>
+    function showDiv() {
+
+      if (document.getElementById('old_news').style.display == "block")
+		    document.getElementById('old_news').style.display = "none";
+	       else
+		       document.getElementById('old_news').style.display = "block";
+         }
+  </script>
+
+</head>
+
+<br>
+<div class="container">
+  <div class="row">
+    <div class="col-sm-2"></div>
+    <div class="col-sm-8">
+{% if round.artetimer == 0 %}
+<b style="color: red" size="14">Round has finished, congratulations {{artis.empire_holding.name_with_id}}! New round registration will begin soon.</b>
+<br>
+<br>
+<br>
+{% elif round.artetimer < 1440 %}
+<b style="color: red" size="14">Artefacts held by {{artis.empire_holding.name_with_id}}. Round will end in {{round.artetimer}} Weeks!</b>
+<br>
+<br>
+{% endif %}
+      Current date : Week <span id="hqweeks">{{week}}</span>, year <span id="hqyears">{{year}}</span>
+      <br><br>User <b>{{ user.username }}</b>
+      <br>Faction <b>{{ status.user_name }}</b>
+    </div>
+    <div class="col-sm-2"></div>
+  </div>
+</div>
+    <br>
+<div class="hq">
+    <div class="col-sm-6">
+      Empire : #{{status.empire.number}}
+      <br>Planets : <span id="hqplanets">{{status.num_planets}}</span>
+      <br>Population : <span id="hqpopulation">{{status.population}}</span>
+      <br>Networth : <span id="hqnetworth">{{status.networth}}</span>
+    </div>
+    <div class="col-sm-6">
+      Fleet readiness : <span id="hqFleetready">{{status.fleet_readiness}}</span>%
+      <br>Psychics readiness : <span id="hqPsychicsready">{{status.psychic_readiness}}</span>%
+      <br>Agents readiness :   <span id="hqAgentsready">  {{status.agent_readiness}}</span>%
+      <br>Home planet : {{status.home_planet.x}},{{status.home_planet.y}}:{{status.home_planet.i}}
+    </div>
+  </div>
+    <br>
+    <br>
+  <div class="row">
+    <div class="content-mobile">
+    <div class="genwhite">Resources
+      <br><img src="../static/pr0.gif" alt="Energy"> Energy : {{status.energy}}
+      <br><img src="../static/pr1.gif" alt="Mineral"> Mineral : <span id="mineral">{{status.minerals}}</span>
+      <br><img src="../static/pr2.gif" alt="Crystal"> Crystal : <span id="crystal">{{status.crystals}}</span>
+      <br><img src="../static/pr3.gif" alt="Ectrolium"> Ectrolium : <span id="ectrolium">{{status.ectrolium}}</span>
+    </div>
+    <br></div>
+    <div class="genwhite"><i>Message from Administration:</i></div>
+    <div class="quote">
+      {{news_feed.date_and_time}}
+      <br>{{news_feed.message|linebreaks}}
+    </div>
+      <br>
+      <b>Message from your Prime Minister</b>
+      <br>{{status.empire.pm_message}}
+      <br><br>
+      {% if fresh_news %}
+        {% include "news.html" with news=fresh_news %}
+      {% else %}
+        <b>No fresh reports</b>
+      {% endif %}
+      <br>
+
+      <input type="button" value="See all reports" onclick="showDiv()" />
+
+    <div id="old_news" style="display: none;">
+        {% if old_news %}
+          {% include "news.html" with news=old_news %}
+        {% else %}
+        <b>No old reports</b>
+        {% endif %}
+    </div>
+  </div>
+
+
+
+
+{% endblock %}

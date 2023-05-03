@@ -1,0 +1,166 @@
+
+{% load mathfilters %}
+
+{% block content %}
+<br>
+	{% for n in news %}	
+		<i>Week {{ n.tick_number|mod:52 }}, year {{ n.tick_number|intdiv:52 }}</i><br>
+		{% if n.news_type == 'SE' %}
+			Your exploration ship reached the <a href="/planet{{n.planet.id}}">planet {{n.planet.x}},{{n.planet.y}}:{{n.planet.i}}</a> and established a colony.
+			{% if n.planet.artefact is not None %}
+			An old and powerfull artefact: {{ n.planet.artefact.name }} 
+			<img src="{{n.planet.artefact.image}}" alt="{{n.planet.artefact.name}}" title="Artefact">
+			is present on this planet!<br>
+			{% endif %}
+			<br><br>
+		{% endif %}
+		{% if n.news_type == 'UE' %}
+			Your exploration ship reached the <a href="/planet{{n.planet.id}}">planet {{n.planet.x}},{{n.planet.y}}:{{n.planet.i}}</a>,
+			but the planet was already habited. The ship is now awaiting your orders in this solar system.
+			<br><br>
+		{% endif %}
+		{% if n.news_type == 'MS' %}
+			You sent a message to <a href="/account{{n.user2.id}}">{{n.user2.userstatus.user_name}}</a>.
+			<br><br>
+		{% endif %}
+		{% if n.news_type == 'MR' %}
+			You received a <a href="/messages">message</a> from <a href="/account{{n.user2.id}}">{{n.user2.userstatus.user_name}}</a>.
+			<br><br>
+		{% endif %}
+		{% if n.news_type == 'RA' %}
+			{{n.user1}} has requested an aid shipment of {{n.extra_info}} from you.
+			<br><br>
+		{% endif %}
+		{% if n.news_type == 'SI' %}
+			{{n.user1}} has sent you an aid shipment of {{n.extra_info}}.
+			<br><br>
+		{% endif %}
+		{% if n.news_type == 'BB' %}
+			{{ n.extra_info|linebreaksbr }}
+			<br><br>
+		{% endif %}
+		{% if n.news_type == 'UB' %}
+			{{ n.extra_info|linebreaksbr }}
+			<br><br>
+		{% endif %}
+		{% if n.news_type == 'FJ' %}
+			{{ n.extra_info|linebreaksbr }}
+			<br><br>
+		{% endif %}
+		{% if n.news_type == 'PD' %}
+			{% if n.user1 == n.user2 %}
+				You have perfomed {{n.fleet1}} with the following results:{{ n.extra_info|linebreaksbr}}
+			{% else %}
+				You were a target of {{ n.fleet1 }} spell 
+					{% if n.user1 == 0 %}
+						performed by unknown faction! 
+					{% else %}
+						performed by <a href="/account{{n.user2.id}}">{{n.user2.userstatus.user_name}}</a>! 
+					{% endif %}
+					With the following results:<br>  {{ n.extra_info|linebreaksbr}}
+			{% endif %}
+			<br><br>
+		{% endif %}
+		{% if n.news_type == 'PA' %}
+			Your psychics have casted a {{n.fleet1}} spell on <a href="/account{{n.user2.id}}">{{n.user2.userstatus.user_name}}</a> with the following results:<br>  {{ n.extra_info|linebreaksbr}}
+			<br><br>
+		{% endif %}
+		{% if n.news_type == 'AA' %}
+			Your agents have performed a {{n.fleet1}} operation on <a href="planet{{n.planet.id}}">planet {{n.planet.x}},{{n.planet.y}}:{{n.planet.i}}</a>
+				{% if n.user2 %}
+				owned by <a href="/account{{n.user2.id}}">{{n.user2.userstatus.user_name}}</a>
+				{% else %}
+				currently uninhabited.
+				{% endif %} with the following results:<br>  {{ n.extra_info|linebreaksbr}}
+			<br><br>
+		{% endif %}
+		{% if n.news_type == 'AD' %}
+			Your were a target of {{n.fleet1}} operation on planet <a href="/planet{{n.planet.id}}">{{n.planet.x}},{{n.planet.y}}:{{n.planet.i}}</a>
+			from
+			{% if n.user2 != None %}
+				<a href="/account{{n.user2.id}}">{{n.user2.userstatus.user_name}}</a> of <a href="/empire{{n.empire2.id}}">{{n.empire2.name_with_id}}</a>
+			{% else %}
+			an unknown faction
+			{% endif %}
+			with the following results:<br> {{ n.extra_info|linebreaksbr}}
+			<br><br>
+		{% endif %}
+		{% if n.news_type == 'SA' %}
+			You have attacked and took control of the <a href="planet{{n.planet.id}}">planet {{n.planet.x}},{{n.planet.y}}:{{n.planet.i}}</a> 
+				previously owned by <a href="/account{{n.user2.id}}">{{n.user2.userstatus.user_name}}</a> from <a href="/empire{{n.empire2.id}}">{{n.empire2.name_with_id}}</a>!
+			<br>
+				<div class = "wrap_box">
+					<div class=""left_news_battle>
+					<u>Attacker losses:</u><br> {{n.fleet1|linebreaksbr}}
+					</div>
+					<div class=""right_news_battle>
+					<u>Defender losses:</u><br> {{n.fleet2|linebreaksbr}}
+					</div>
+				</div>
+			<br><br>
+		{% endif %}
+		{% if n.news_type == 'UA' %}
+			You have attacked and failed to capture the <a href="planet{{n.planet.id}}">planet {{n.planet.x}},{{n.planet.y}}:{{n.planet.i}}</a> 
+				owned by <a href="/account{{n.user2.id}}">{{n.user2.userstatus.user_name}}</a> from <a href="/empire{{n.empire2.id}}">{{n.empire2.name_with_id}}</a>!
+			<br>
+				<div class = "wrap_box">
+					<div class=""left_news_battle>
+					<u>Attacker losses:</u><br> {{n.fleet1|linebreaksbr}}
+					</div>
+					<div class=""right_news_battle>
+					<u>Defender losses:</u><br> {{n.fleet2|linebreaksbr}}
+					</div>
+				</div>
+			<br><br>
+		{% endif %}
+		{% if n.news_type == 'SD' %}
+			Your <a href="planet{{n.planet.id}}">planet {{n.planet.x}},{{n.planet.y}}:{{n.planet.i}}</a>, was unsuccessfully attacked by
+				 <a href="/account{{n.user2.id}}">{{n.user2.userstatus.user_name}}</a> from <a href="/empire{{n.empire2.id}}">{{n.empire2.name_with_id}}</a>!
+			<br><u>Attacker losses:</u><br> {{n.fleet2|linebreaksbr}}<br><u>Defender losses:</u><br> {{n.fleet1|linebreaksbr}}
+			<br><br>
+		{% endif %}
+		{% if n.news_type == 'UD' %}
+			You have lost the <a href="planet{{n.planet.id}}">planet {{n.planet.x}},{{n.planet.y}}:{{n.planet.i}}</a> 
+				to <a href="/account{{n.user2.id}}">{{n.user2.userstatus.user_name}}</a> from <a href="/empire{{n.empire2.id}}">{{n.empire2.name_with_id}}</a>!
+			<br><u>Attacker losses:</u><br> {{n.fleet2|linebreaksbr}}<br><u>Defender losses:</u><br> {{n.fleet1|linebreaksbr}}
+			<br><br>
+		{% endif %}
+		{% if n.news_type == 'FS' %}
+			Your fleet consitsting of: {{n.fleet1}} 
+			has reached its destination and {{n.extra_info}}
+			<br><br>
+		{% endif %}
+		{% if n.news_type == 'FU' %}
+			Your fleet consitsting of: {{n.fleet1}} 
+			has reached its destination and {{n.extra_info}}
+			<br><br>
+		{% endif %}
+		{% if n.news_type == 'FM' %}
+			{{n.extra_info}}
+			<br><br>
+		{% endif %}
+		{% if n.news_type == 'GA' %}
+			Your Ghost Ships have performed a {{n.fleet1}} Incantation on <a href="planet{{n.planet.id}}">planet {{n.planet.x}},{{n.planet.y}}:{{n.planet.i}}</a>
+				{% if n.user2 %}
+				owned by <a href="/account{{n.user2.id}}">{{n.user2.userstatus.user_name}}</a>
+				{% else %}
+				currently uninhabited.
+				{% endif %} with the following results:<br>  {{ n.extra_info|linebreaksbr}}
+			<br><br>
+		{% endif %}
+		{% if n.news_type == 'GD' %}
+			Your were a target of {{n.fleet1}} Incantation on planet <a href="/planet{{n.planet.id}}">{{n.planet.x}},{{n.planet.y}}:{{n.planet.i}}</a>
+			from
+			{% if n.user2 != None %}
+				<a href="/account{{n.user2.id}}">{{n.user2.userstatus.user_name}}</a> of <a href="/empire{{n.empire2.id}}">{{n.empire2.name_with_id}}</a>
+			{% else %}
+			an unknown faction
+			{% endif %}
+			with the following results:<br> {{ n.extra_info|linebreaksbr}}
+			<br><br>
+		{% endif %}
+	
+	
+	{% endfor %}
+
+{% endblock %}

@@ -1,0 +1,73 @@
+{% extends "base.html" %}
+
+{% load static %}
+
+{% block content %}
+
+{% if msg is not None %}
+{{msg}}
+{% endif %}
+
+<style>
+
+  .hall_of_fame_table {
+    margin: 0 auto; 
+	margin-bottom: 10px;
+  }
+
+</style>
+
+Account ID: {{player.user.id}}
+<br>
+Faction name: {{player.user_name}}
+<br>
+Faction race: {{player.get_race_display}}
+<br>
+Faction empire: <a href="/empire{{player.empire.id}}">{{player.empire.name_with_id}}</a>
+<br>
+Tag Points: {{player.tag_points}}
+<br>
+{% if player.user.id == 1 %}
+<b><font style="color:Yellow;">Administrator</font></b>
+{% elif player.user.id == 8 or player.user.id == 3 or player.user.id == 4 or player.user.id == 5 or player.user.id == 6 or player.user.id == 7 %}
+<font style="color:Red;">BOT</font>
+{% else %}
+Tag: {{player.tag}}
+{% endif %}
+<br><br>
+
+{% if player.user.id == status.user.id %}
+User name : {{player.user}}
+<br>
+User e-mail : {{player.user.email}}
+<br>
+Tag points : {{player.tag_points}}
+<br>
+<a href="/password">Change Password</a>
+<form action="" method="POST">
+{% csrf_token %}
+<input type="submit" name = "Rejoin" value="Rejoin"></form>
+</form>
+{% else %}
+<a href="/compose_message{{player.user.id}}">Send Message</a>
+<br>
+
+{% endif %}
+<br>
+{% for p in hof %}
+	<u>Round # {{p.round}}<br></u>
+	<table class="hall_of_fame_table">
+	<tr><td><b>Name:</b> {{p.user}}</td></tr>
+	<tr><td><b>Planets:</b> {{p.planets}}</td></tr>
+	<tr><td><b>Networth:</b> {{p.networth}}</td></tr>
+	<tr><td><b>Empire:</b> {{p.empire}}</td></tr>
+	<tr><td><b>Race:</b> {{p.race}}</td></tr>
+	<tr><td><b>Artefacts:</b> {{p.artefacts}}</td></tr>
+	
+	</table>
+	<br>
+	
+{% endfor %}
+
+{% endblock %}
+

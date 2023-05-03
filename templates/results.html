@@ -1,0 +1,16 @@
+{% extends "base.html" %}
+
+{% load static %}
+
+{% block content %}
+
+
+{% for player in player_list %}
+    {{ player.user_name }} - {{ player.votes }} vote{{ player.votes|pluralize }}
+{% endfor %}
+<br>
+<br>
+<a href="/vote">Vote again?</a>
+
+
+{% endblock %}

@@ -1,0 +1,147 @@
+{% extends "base.html" %}
+
+{% load static %}
+
+{% load mathfilters %}
+
+{% block content %}
+
+<style type="text/css">
+
+.row1{}
+
+.row2{
+display: table-row;
+background-color: rgb(25,38,51);
+}
+
+</style>
+
+<div class= "center">
+<table width="100%">
+<tr>
+<td width="15%"><a href="?order_by=planet">Planet</a></td>
+<td width="10%"><a href="?order_by=-size">Size</a></td>
+<td width="8%"><a href="?order_by=total_buildings">Buildings</a></td>
+<td width="12%"><a href="?order_by=overbuilt">Overbuilt %</a></td>
+<td width="25%"><a href="?order_by=current_population">Population</a></td>
+<td width="28%">Build - <a href="?order_by=protection">Protection</a> -
+<style>
+.dropbtn {  background-color: #4CAF50;  color: white;  font-size: 12px;  border: none;  padding: 0px;}
+.dropdown {  position: relative;  display: inline-block;}
+.dropdown-content {  display: none;  position: absolute;  background-color: #f1f1f1;  min-width: 160px;  box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);  z-index: 1;}
+.dropdown-content a {  color: black;  padding: 12px 16px;  text-decoration: none;  display: block;}
+.dropdown-content a:hover {background-color: #ddd;}.dropdown:hover .dropdown-content {display: block;}
+.dropdown:hover .dropbtn {background-color: #3e8e41;}
+</style>
+<div class="dropdown"><button class="dropbtn" disabled>Bonus</button>
+<div class="dropdown-content">
+<a href="?order_by=artefact">Artefacts</a>
+<a href="?order_by=-bonus_solar">Solar</a>
+<a href="?order_by=-bonus_mineral">Mineral</a>
+<a href="?order_by=-bonus_crystal">Crystal</a>
+<a href="?order_by=-bonus_ectrolium">Ectrolium</a>
+<a href="?order_by=-bonus_fission">Fission</a></td>
+<td width="2%"><div class="href" onclick="toggleForm('massbuild');"><font size="1">Toggle</font></div></td>
+</tr>
+
+<form action="/mass_build" method="POST" name="massbuild">
+{% csrf_token %}
+
+{% for planet in planets %}
+
+<tr class="{% cycle 'row2' 'row1' %}">
+
+<td><a href="/planet{{planet.id}}">{{planet.x}},{{planet.y}}:{{planet.i}}
+</a></td>
+<td>{{planet.size}}</td>
+<td>{{planet.total_buildings}}
+
+{% if planet.buildings_under_construction > 0 %}
+({{planet.buildings_under_construction}})
+{% endif %}
+</td>
+<td id="overbuilt">
+{% if planet.overbuilt > 1.0 %}
+<font color="#FF2020">
+{{ planet.overbuilt_percent|floatformat:2 }}
+</font></td>
+{% endif %}
+
+<td>
+{% if planet.popper >= 90 %}
+<font color="#FF0000">
+{% elif planet.popper >= 70 %}
+<font color="#FFFF00">
+{% else %}
+<font color="#00FF00">
+{% endif %}{{planet.current_population}} / {{planet.max_population}}</font></td>
+<td><a href="/build{{planet.id}}">Build</a>
+{% if planet.portal %}
+&nbsp;&nbsp;<img src="/static/buildings/Portal.png" width=16px height=16px>&nbsp;<font color="#00FF00">{{planet.protection}}%</font>
+{% else %}
+    {% if planet.protection >= 70 %}
+    &nbsp;&nbsp;<font color="#00FF00">{{planet.protection}}%</font>
+    {% elif planet.protection >= 40 %}
+    &nbsp;&nbsp;<font color="#FFFF00">{{planet.protection}}%</font>
+    {% else %}
+    &nbsp;&nbsp;<font color="#FF0000">{{planet.protection}}%</font>
+    {% endif %}
+{% endif %}
+
+{% if planet.artefact is not None %}
+	<img src="{{planet.artefact.image}}" alt="{{planet.artefact.name}}" title="Artefact"></td>
+{% else %}
+
+{% if planet.bonus_solar %}
+<img src="{% static 'pr0.gif' %}" alt="Solar" title="Solar">+{{planet.bonus_solar}}%</td>
+{% endif %}
+
+{% if planet.bonus_mineral %}
+<img src="{% static 'pr1.gif' %}" alt="Mineral" title="Mineral">+{{planet.bonus_mineral}}%</td>
+{% endif %}
+
+{% if planet.bonus_crystal %}
+<img src="{% static 'pr2.gif' %}" alt="Crystal" title="Crystal">+{{planet.bonus_crystal}}%</td>
+{% endif %}
+
+{% if planet.bonus_ectrolium %}
+<img src="{% static 'pr3.gif' %}" alt="Ectrolium" title="Ectrolium">+{{planet.bonus_ectrolium}}%</td>
+{% endif %}
+
+{% if planet.bonus_fission %}
+<img src="{% static 'pr4.gif' %}" alt="Fission" title="Fission">+{{planet.bonus_fission}}%</td>
+{% endif %}
+
+{% endif %}
+
+<td align="center"><input type="checkbox" name="planets_id_mass_build" value="{{planet.id}}"></td>
+</tr>
+
+{% endfor %}
+<tr><td>{{status.num_planets}}</td>
+<td>{{totsize}}</td>
+<td>{{totbuilds}}</td>
+<td>Average: {{avgob}}%</td>
+<td>
+{% if totpopp >= 90 %}
+<font color="#FF0000">
+{% elif totpopp >= 70 %}
+<font color="#FFFF00">
+{% else %}
+<font color="#00FF00">
+{% endif %}
+{{currentpop}} / {{maxpop}}</font></td>
+<td>{{status.total_portals}}</td>
+<td></td></tr>
+<tr><td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td colspan="2" align="right"><input type="submit" value="Mass Build"></td></tr>
+</table>
+</form>
+</div>
+
+{% endblock %}

@@ -1,0 +1,409 @@
+{% extends "base.html" %}
+
+{% load static %}
+
+{% block content %}
+
+
+
+{% if msg != '' %}
+	{{msg|linebreaksbr}}
+	<br>
+	<br>
+{% endif %}
+
+<style>
+.border_agent { 
+position:relative;
+display:inline-block;
+box-sizing: border-box;
+border: 25px solid transparent;
+border-image-slice:100% 100% 100% 100%;
+border-image: url("../static/units/agent_ops2.png") 500 ;
+width:100%;
+margin-bottom: 25px;
+}
+
+.border_psyhic { 
+position:relative;
+display:inline-block;
+box-sizing: border-box;
+border: 25px solid transparent;
+border-image-slice:100% 100% 100% 100%;
+border-image: url("../static/units/psy_ops.png") 500 ;
+width:100%;
+margin-bottom: 25px;
+}
+
+.border_ghost { 
+position:relative;
+display:inline-block;
+box-sizing: border-box;
+border: 25px solid transparent;
+border-image-slice:100% 100% 100% 100%;
+border-image: url("../static/units/gs_ops.png") 500 ;
+width:100%;
+}
+
+.ops_box{
+box-sizing: border-box;
+width: 50%; 
+margin:0 auto;
+float:left; 
+text-align:left;
+padding-left: 15%;
+}
+
+.ops_box2{
+box-sizing: border-box;
+width: 50%; 
+margin:0 auto;
+float:right; 
+text-align:left;
+padding-right: 15%;
+
+}
+
+.hidden{
+display: none;
+}
+
+.centered2 {
+    position:relative;
+    top:-20px;
+}
+
+.remove-all-styles {
+    all: revert;
+  }
+  
+
+
+}
+</style>
+
+<script>
+function psychicCheck() {
+	{% for name, values in spells.items  %}
+		if (document.getElementById('{{values.4}}').checked) {
+			document.getElementById('spell_{{values.4}}').style.display = 'inline';
+			
+			if (document.getElementById('hidden_values{{ values.4 }}').value == "False" ) {
+				document.getElementById('target_user_psy').style.visibility = 'visible';
+			}
+			else document.getElementById('target_user_psy').style.visibility = 'hidden';
+			
+		}
+		else document.getElementById('spell_{{values.4}}').style.display = 'none';
+	{% endfor %}
+}
+function agentsCheck() {
+	{% for name, values in operations.items  %}
+		if (document.getElementById('{{values.4}}').checked) {
+			document.getElementById('ops_{{values.4}}').style.display = 'inline';
+		}
+		else document.getElementById('ops_{{values.4}}').style.display = 'none';
+	{% endfor %}
+}
+function ghostsCheck() {
+	{% for name, values in incantations.items  %}
+		if (document.getElementById('{{values.4}}').checked) {
+			document.getElementById('ops_{{values.4}}').style.display = 'inline';
+		}
+		else document.getElementById('ops_{{values.4}}').style.display = 'none';
+
+	{% endfor %}
+}
+</script>
+
+
+
+<div class ="border_agent"  >
+<div class="centered2"><h3>Covert Operations</h3></div>
+	<div class="ops_box spaceUnder">
+	<b>Agents amount: {{main_fleet.agent}}</b>
+	<br><br>
+		<form action="/specops" method="POST">
+		{% csrf_token %}
+			{% for name, values in operations.items  %}
+			<input class="spaceUnder" type="radio" id="{{ values.4 }}" name="operation" value="{{ name }}" onclick="agentsCheck()">
+			<input class="spaceUnder" type="hidden" id="hidden_values{{ values.4 }}" value="{{ values.3 }}">
+			<label class="remove-all-styles " >{{ name }}</label>
+			<br>
+			{% endfor %}
+			<div class = "spaceUnder"></div>
+			units to send:
+			<input class="spaceUnder" type="number"  min="0" max="{{main_fleet.agent}}" name="unit_ammount" size="12" value="{{main_fleet.agent}}" />
+			<div class="spaceUnder" id="target_planet">
+				Target coordinates:
+				X:<input class="spaceUnder" pattern="[0-9]+" type="text" name="X" size="4" value ="{{planet_to_template_specop.x}}">
+				Y:<input class="spaceUnder" pattern="[0-9]+" type="text" name="Y" size="4" value ="{{planet_to_template_specop.y}}">
+				Planet:<input class="spaceUnder" pattern="[0-9]+" type="text" name="I" size="4" value ="{{planet_to_template_specop.i}}">
+			</div>
+			<input type="submit" value="Perform">
+		</form> 
+	</div>
+	<div id="dvtext2" class="ops_box2">
+			{% for name, values in operations.items  %}
+				<div id="ops_{{values.4}}" class="hidden" > 
+				Covert operation name: {{name}}<br>
+				Technology required: {{values.0}}<br>
+				{% if values.7 == -1 %}
+				<span style="color:red">Technological penalty too high! Operation unavailible!</span><br>
+				{% elif values.7 > 0 %}
+				<span style="color:red">Technological penalty: {{values.7}}</span><br>
+				{% endif %}
+				Base agents readiness cost: {{values.1}}<br>
+				{%if values.6 > 0 %}
+				<span style="color:green">Current cost: {{values.6}}</span><br>
+				{% endif %}
+				Difficulty: {{values.2}}<br>
+				Stealth: {{values.3}}<br>
+				Description: {{values.5}}
+				</div>
+			{% endfor %}
+	</div>
+{% if agent_fleets %}
+	<div style="width:100%; float:left;">
+		Agents travelling:	
+		<form action="/specops" method="POST" name="cancelAgents" style="margin-bottom: 25px" >
+		{% csrf_token %}
+		<table style="margin: 0 auto;">
+		<tr>
+		<td>Special operation:</td>
+		<td>No. of agents</td>
+		<td>Target planet</td>
+		<td>Order</td>
+		<td>Time remaining</td>
+		<td></td>
+		</tr>
+		{% for agents in agent_fleets %}
+		<tr>
+		<td>{{agents.specop}}</td>
+		<td>{{agents.agent}}</td>
+		<td>{{agents.x}},{{agents.y}}:{{agents.i}}</td>
+		<td>{% if agents.command_order == 6 %} Perform Operation {% else %} Returning {% endif %}</td>
+		<td>{{agents.ticks_remaining}}</td>
+		<td>			
+			<input type="checkbox" name="agent_select" value="{{agents.id}}"" /></td>
+		</tr>
+		{% endfor %}
+		</table>
+		<input type="submit" value="Cancel operations">
+		<br>
+		</form>
+	</div>
+{% endif %}
+	<div style="width:100%; float:left;">
+		<div class="ops_box spaceUnder">
+		<b>Operations affecting your faction:</b><br>
+			{% for o in ops_in%}
+				{{o.name}} 
+				{% if o.specop_strength > 0 %}
+				of 
+				{{o.specop_strength}}% 
+				{% endif %}
+				from <a href="/account{{o.user_from.userstatus.id}}">{{o.user_from.userstatus.user_name}}</a>
+				{% if o.planet is not None %}
+						on <a href="/planet{{o.planet.id}}">{{o.planet.x}}:{{o.planet.y}},{{o.planet.i}}</a>
+				{% endif %}
+				for {{o.ticks_left}} weeks.<br>
+			{% endfor %}
+		</div>
+		<div id="dvtext2" class="ops_box2">
+			<b>Your operations on other factions:</b><br>
+			{% for o in ops_out%}
+				{{o.name}} 
+				{% if o.name == "Diplomatic Espionage" or o.name == "High Infiltration" %}
+					<a href="/specop_show{{o.id}}">{{o.extra_effect}}</a>
+				{% elif o.specop_strength > 0 %}
+				of {{o.specop_strength}}% 
+					{% endif %}
+				on <a href="/account{{o.user_to.userstatus.id}}">{{o.user_to.userstatus.user_name}}</a> 
+				{% if o.planet is not None %}
+					on <a href="/planet{{o.planet.id}}">{{o.planet.x}}:{{o.planet.y}},{{o.planet.i}}</a> 
+				{% endif %}
+				for {{o.ticks_left}} weeks.<br>
+			{% endfor %}
+		</div>
+	</div>
+</div>
+<br><br>
+
+
+
+<div class="border_psyhic" >
+<div class="centered2 spaceUnder"><h3>Spells</h3></div>
+	<div class="ops_box ">
+	<b>Psychics amount: {{main_fleet.wizard}}</b>
+	<br><br>
+		<form action="/specops" method="POST" style="margin-bottom: 25px">
+		{% csrf_token %}
+			{% for name, values in spells.items  %}
+			<input class="spaceUnder" type="radio" id="{{ values.4 }}" name="spell" value="{{ name }}" onclick="psychicCheck()">
+			<input class="spaceUnder" type="hidden" id="hidden_values{{ values.4 }}" value="{{ values.3 }}">
+			<label class="remove-all-styles " >{{ name }}</label>
+			<br>
+			{% endfor %}
+			<div class = "spaceUnder"></div>
+			units to send:
+			<input class="spaceUnder" type="number"  min="0" max="{{main_fleet.wizard}}" name="unit_ammount" size="12" value="{{main_fleet.wizard}}" />
+			<div class="spaceUnder" id="target_user_psy">
+				user name/id:
+				<input type="text" name="user_id2" size="12" value="{{user_to_template_specop}}" />
+			</div>
+			<input type="submit" value="Perform">
+		</form> 
+	</div>
+	<div id="dvtext" class="ops_box2">
+			{% for name, values in spells.items  %}
+				<div id="spell_{{values.4}}" class="hidden" > 
+				Spell name: {{name}}<br>
+				Technology required: {{values.0}}<br>
+				{% if values.7 == -1 %}
+				<span style="color:red">Technological penalty too high! Spell unavailible!</span><br>
+				{% elif values.7 > 0 %}
+				<span style="color:red">Technological penalty: {{values.7}}</span><br>
+				{% endif %}
+				Base psychics readiness cost: {{values.1}}<br>
+				{%if values.6 > 0 %}
+				<span style="color:green">Current cost: {{values.6}}</span><br>
+				{% endif %}
+				Difficulty: {{values.2}}<br>
+				Self-spell: {{values.3}}<br>
+				Description: {{values.5}}
+				</div>
+			{% endfor %}
+	</div>
+	<div style="width:100%; float:left;">
+		<div class="ops_box spaceUnder">
+		<b>Spells affecting your faction:</b><br>
+			{% for o in spells_in%}
+				{{o.name}}
+				{% if o.name == "Enlightenment" %}
+					{% if o.extra_effect == "BadFR" %}
+						FR protection decreased by 
+					{% else %}
+						{{o.extra_effect}} production increased by
+					{% endif %}
+				{% else %}
+					of
+				{% endif %}
+				
+				{{o.specop_strength}}% from {{o.user_from.userstatus.user_name}} for {{o.ticks_left}} weeks.<br>
+			{% endfor %}
+		</div>
+		<div id="dvtext2" class="ops_box2">
+			<b>Your spells on other factions:</b><br>
+			{% for o in spells_out%}
+				{{o.name}} of {{o.specop_strength}}% on {{o.user_to.userstatus.user_name}} for {{o.ticks_left}} weeks.<br>
+			{% endfor %}
+		</div>
+	</div>
+</div>
+
+<br><br>
+
+<div class="border_ghost" >
+<div class="centered2"><h3>Incantations</h3></div>
+	<div class="ops_box spaceUnder">
+	Ghost ships amount: {{main_fleet.ghost}}
+	<br>
+		<form action="/specops" method="POST">
+		{% csrf_token %}
+			{% for name, values in incantations.items %}
+			<input class="spaceUnder" type="radio" id="{{ values.4 }}" name="incantation" value="{{ name }}" onclick="ghostsCheck()">
+			<input class="spaceUnder" type="hidden" id="hidden_values{{ values.4 }}" value="{{ values.3 }}">
+			<label class="remove-all-styles " >{{ name }}</label>
+			<br>
+			{% endfor %}
+			<div class = "spaceUnder"></div>
+			units to send:
+			<input class="spaceUnder" type="number"  min="0" max="{{main_fleet.ghost}}" name="unit_ammount" size="12" value="{{main_fleet.ghost}}" />
+			<div class="spaceUnder" id="target_planet">
+				Target coordinates:
+				X:<input class="spaceUnder" pattern="[0-9]+" type="text" name="X" size="4" value ="{{planet_to_template_specop.x}}">
+				Y:<input class="spaceUnder" pattern="[0-9]+" type="text" name="Y" size="4" value ="{{planet_to_template_specop.y}}">
+				Planet:<input class="spaceUnder" pattern="[0-9]+" type="text" name="I" size="4" value ="{{planet_to_template_specop.i}}">
+			</div>
+			<input type="submit" value="Perform">
+		</form> 
+	</div>
+	<div class="ops_box2">
+		{% for name, values in incantations.items  %}
+				<div id="ops_{{values.4}}" class="hidden" > 
+				Covert operation name: {{name}}<br>
+				Technology required: {{values.0}}<br>
+				{% if values.7 == -1 %}
+				<span style="color:red">Technological penalty too high! Incantation unavailible!</span><br>
+				{% elif values.7 > 0 %}
+				<span style="color:red">Technological penalty: {{values.7}}</span><br>
+				{% endif %}
+				Base psychic readiness cost: {{values.1}}<br>
+				{%if values.6 > 0 %}
+				<span style="color:green">Current cost: {{values.6}}</span><br>
+				{% endif %}
+				Difficulty: {{values.2}}<br>
+				Stealth: {{values.3}}<br>
+				Description: {{values.5}}
+				</div>
+			{% endfor %}
+	</div>
+{% if ghost_fleets %}
+	<div style="width:100%; float:left;">
+		Ghost Ships travelling:	
+		<form action="/specops" method="POST" name="cancelGhosts" style="margin-bottom: 25px" >
+		{% csrf_token %}
+		<table style="margin: 0 auto;">
+		<tr>
+		<td>Incantation:</td>
+		<td>No. of Ghost Ships</td>
+		<td>Target planet</td>
+		<td>Order</td>
+		<td>Time remaining</td>
+		<td></td>
+		</tr>
+		{% for ghosts in ghost_fleets %}
+		<tr>
+		<td>{{ghosts.specop}}</td>
+		<td>{{ghosts.ghost}}</td>
+		<td>{{ghosts.x}},{{ghosts.y}}:{{ghosts.i}}</td>
+		<td>{% if ghosts.command_order == 7 %} Perform Incantation {% else %} Returning {% endif %}</td>
+		<td>{{ghosts.ticks_remaining}}</td>
+		<td>			
+			<input type="checkbox" name="ghost_select" value="{{ghosts.id}}"" /></td>
+		</tr>
+		{% endfor %}
+		</table>
+		<input type="submit" value="Cancel incantations">
+		<br>
+		</form>
+	</div>
+{% endif %}	
+	<div style="width:100%; float:left;">
+		<div class="ops_box spaceUnder">
+		<b>Incantations affecting your faction:</b><br>
+			{% for g in inca_in%}
+				{% if g.name == "Planetary Shielding" %}
+				<a href="/planet{{g.planet.id}}">{{g.planet.x}},{{g.planet.y}}:{{g.planet.i}}</a> {{g.name}} of {{g.specop_strength}} for {{g.ticks_left}} weeks.<br>
+				{% elif g.name == "Portal Force Field" %}
+				<a href="/planet{{g.planet.id}}">{{g.planet.x}},{{g.planet.y}}:{{g.planet.i}}</a> {{g.name}} of {{g.specop_strength}}% for {{g.ticks_left}} weeks from <a href="/account{{g.user_from.userstatus.id}}">{{g.user_from.userstatus.user_name}}</a>.<br>
+				{% elif g.name == "Vortex Portal" %}
+				{{g.name}} for {{g.ticks_left}} weeks at {{g.planet.x}}, {{g.planet.y}}<br>
+				{% else %}
+				{{g.name}} of {{g.specop_strength}}% from <a href="/account{{g.user_from.userstatus.id}}">{{g.user_from.userstatus.user_name}}</a> for {{g.ticks_left}} weeks.<br>
+				{% endif %}
+			{% endfor %}
+		</div>
+		<div id="dvtext2" class="ops_box2">
+			<b>Your incantations on other factions:</b><br>
+			{% for g in inca_out%}
+				<a href="/planet{{g.planet.id}}">{{g.planet.x}},{{g.planet.y}}:{{g.planet.i}}</a> {{g.name}} of {{g.specop_strength}}% on <a href="/account{{g.user_to.userstatus.id}}">{{g.user_to.userstatus.user_name}}</a> for {{g.ticks_left}} weeks.<br>
+			{% endfor %}
+		</div>
+	</div>
+</div>
+<br><br>
+
+
+{% endblock %}

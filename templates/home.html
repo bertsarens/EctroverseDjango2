@@ -1,0 +1,82 @@
+{% extends "index.html" %}
+
+{% block content %}
+{% load static %}
+
+<head>
+<style>
+@media (min-width: 50em) {
+.testimonial-grid {
+  grid-template-columns: repeat(3, 1fr);
+}
+}
+</style>
+</head>
+<body>
+  <div class="newsfeed">
+    <h1>Recent News</h1>
+    <p1>News goes here</p1>
+  </div>
+  <main class="testimonial-grid">
+    <article class="testimonial">
+      <div class="flex">
+        <div>
+        </div>
+      </div>
+      <p1>
+        Who we are
+      </p1>
+    </article>
+    <article class="testimonial2">
+      <div class="flex">
+        <div>
+        </div>
+      </div>
+      <p1>
+        What we do
+      </p1>
+    </article>
+    <article class="testimonial">
+      <div class="flex">
+        <div>
+        </div>
+      </div>
+      <p1>
+        Meet the team
+      </p1>
+    </article>
+    <article class="testimonial2">
+      <div class="flex">
+        <div>
+        </div>
+      </div>
+      <p1>
+        Term time provisions
+      </p1>
+    </article>
+    <article class="testimonial">
+      <div class="flex">
+        <div>
+        </div>
+      </div>
+      <p1>
+        Whats on? Half Term
+      </p1>
+    </article>
+    <a href="/nyo/contact"><article class="testimonial2">
+      <div class="flex">
+        <div>
+        </div>
+      </div>
+      <p1>
+        Contact Us
+      </p1>
+    </article></a>
+  </main>
+
+{% endblock %}
+
+
+</body>
+
+</html>

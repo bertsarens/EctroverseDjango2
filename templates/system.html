@@ -1,0 +1,257 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+{% load mathfilters %}
+
+{% if msg != '' %}
+    {{msg|linebreaksbr}}
+{% endif %}
+
+<table width="100%">
+<tr>
+<form action="" method="POST"><td align="right" width="25%">{% csrf_token %}<input type="submit" name="explore_all" value="Explore"></td></form>
+<td width="25%"></td>
+<form action="" method="POST"><td align="right" width="25%">{% csrf_token %}Agents to send to each planet: <td valign="top"><input type="number" max="999999" style="width: 5em" value = 100 name="obsagents"></td>
+<td align="left" width="25%"><input type="submit" name="observe_all" value="Observe"></td></form>
+</tr>
+</table>
+
+
+<div id="mapdiv" style="background-color:black;"></div>
+
+<script>
+  const width = 100;
+  const height = 100;
+  const circle_radius = 1;
+
+  const svg = d3.select("#mapdiv")
+    .append("div")
+    .append("svg")
+    .style("height", '80vh')
+    .style("width", '80vw')
+    .attr("preserveAspectRatio", "xMidYmin meet")
+    .attr("viewBox", [-1, -1, width+1, height+1])
+
+  const g = svg.append("g");
+
+
+
+  g.append("image")
+    .attr("xlink:href", "{{system.img}}")
+    .attr("x", 42)
+    .attr("y", 42)
+    .attr("width", 16)
+    .attr("height", 16)
+    .append("title") // hover-over text
+    .text("{{system.x}},{{system.y}}");
+    g.append("text")
+        .attr("x", 50)
+        .attr("y", 60)
+        .attr("font-family", "sans-serif")
+        .attr("font-size", "2px")
+        .attr("fill", "white")
+        .attr("text-anchor", "middle")
+{% for planet in yp %}
+{% if forloop.first %}
+        .text("Portal Protection: {{planet.protection}}%");
+{% endif %}
+{% endfor %}
+
+  
+{% for planet in planets %}
+{% for setting in settings %}
+    {% for scouting in scouted %}
+        {% if setting.map_setting == "SC" and planet.id == scouting.planet.id %}
+            g.append("circle")
+            {% if planet.i == 0 %}                                 
+                .attr("cx", 4)
+                .attr("cy", 50)
+            {% elif planet.i == 1 %}                                 
+                .attr("cx", 19)
+                .attr("cy", 19)
+            {% elif planet.i == 2 %}                                 
+                .attr("cx", 50)
+                .attr("cy", 6)
+            {% elif planet.i == 3 %}                                 
+                .attr("cx", 81)
+                .attr("cy", 19)
+            {% elif planet.i == 4 %}                                 
+                .attr("cx", 96)
+                .attr("cy", 50)
+            {% elif planet.i == 5 %}                                 
+                .attr("cx", 81)
+                .attr("cy", 81)
+            {% elif planet.i == 6 %}                                 
+                .attr("cx", 50)
+                .attr("cy", 93)
+            {% elif planet.i == 7 %}                                 
+                .attr("cx", 19)
+                .attr("cy", 81)
+            {% endif %}
+                .attr("r", 4)
+                .style("stroke", "{{ setting.get_color_settings_display }}")
+                .style("stroke-width", "1")
+                .style("fill", "none")
+                .style("opacity",1) 
+{% endif %}
+{% endfor %}  
+{% endfor %} 
+    g.append("a")
+        .attr("xlink:href", "/planet{{planet.id}}")
+        {% if planet.id|mod:10 == 1 %}
+        .append("image")
+            .attr("xlink:href", "/static/map/p00.png")
+        {% elif planet.id|mod:10 == 2 %}
+        .append("image")
+            .attr("xlink:href", "/static/map/p11.png")
+        {% elif planet.id|mod:10 == 3 %}
+        .append("image")
+            .attr("xlink:href", "/static/map/p01.png")            
+        {% elif planet.id|mod:10 == 4 %}
+        .append("image")
+            .attr("xlink:href", "/static/map/p10.png")
+        {% elif planet.id|mod:10 == 5 %}
+        .append("image")
+            .attr("xlink:href", "/static/map/p03.png")
+        {% elif planet.id|mod:10 == 6 %}
+        .append("image")
+            .attr("xlink:href", "/static/map/p04.png")
+        {% elif planet.id|mod:10 == 7 %}
+        .append("image")
+            .attr("xlink:href", "/static/map/p05.png")
+        {% elif planet.id|mod:10 == 8 %}
+        .append("image")
+            .attr("xlink:href", "/static/map/p06.png")
+        {% elif planet.id|mod:10 == 9 %}
+        .append("image")
+            .attr("xlink:href", "/static/map/p07.png")
+        {% elif planet.id|mod:10 == 0 %}
+        .append("image")
+            .attr("xlink:href", "/static/map/p08.png")
+        {% endif %}
+        {% if planet.i == 0 %}                                 
+            .attr("x", 0)
+            .attr("y", 46)
+        {% elif planet.i == 1 %}                                 
+            .attr("x", 15)
+            .attr("y", 15)
+        {% elif planet.i == 2 %}                                 
+            .attr("x", 46)
+            .attr("y", 2)
+        {% elif planet.i == 3 %}                                 
+            .attr("x", 77)
+            .attr("y", 15)
+        {% elif planet.i == 4 %}                                 
+            .attr("x", 92)
+            .attr("y", 46)
+        {% elif planet.i == 5 %}                                 
+            .attr("x", 77)
+            .attr("y", 77)
+        {% elif planet.i == 6 %}                                 
+            .attr("x", 46)
+            .attr("y", 89)
+        {% elif planet.i == 7 %}                                 
+            .attr("x", 15)
+            .attr("y", 77)
+        {% endif %}
+            .attr("width", 8) // changes in zoom
+            .attr("height", 8) // changes in zoom
+            .append("title") // hover-over text
+            .text("{{planet.x}},{{planet.y}}:{{planet.i}}");
+        g.append("text")
+        {% if planet.i == 0 %}                                 
+            .attr("x", 3.5)
+            .attr("y", 45)
+        {% elif planet.i == 1 %}                                 
+            .attr("x", 18.5)
+            .attr("y", 14)
+        {% elif planet.i == 2 %}                                 
+            .attr("x", 49.5)
+            .attr("y", 1)
+        {% elif planet.i == 3 %}                                 
+            .attr("x", 80.5)
+            .attr("y", 14)
+        {% elif planet.i == 4 %}                                 
+            .attr("x", 95.5)
+            .attr("y", 45)
+        {% elif planet.i == 5 %}                                 
+            .attr("x", 80.5)
+            .attr("y", 76)
+        {% elif planet.i == 6 %}                                 
+            .attr("x", 49.5)
+            .attr("y", 88)
+        {% elif planet.i == 7 %}                                 
+            .attr("x", 18.5)
+            .attr("y", 76)
+        {% endif %}
+        .attr("font-family", "sans-serif")
+        .attr("font-size", "2px")
+        .attr("fill", "white")
+        .attr("text-anchor", "middle")
+        {% if planet.owner.id == status.user.id %}
+        {% if planet.portal %}
+        .text("{{planet.i}}, Portal");
+        {% else %}
+        .text("{{planet.i}}");
+        {% endif %}
+        {% else %}
+        .text("{{planet.i}}");
+        {% endif %}    
+      
+        
+        g.append("text")
+        {% if planet.i == 0 %}                                 
+            .attr("x", 4)
+            .attr("y", 56)
+        {% elif planet.i == 1 %}                                 
+            .attr("x", 19)
+            .attr("y", 25)
+        {% elif planet.i == 2 %}                                 
+            .attr("x", 50)
+            .attr("y", 12)
+        {% elif planet.i == 3 %}                                 
+            .attr("x", 81)
+            .attr("y", 25)
+        {% elif planet.i == 4 %}                                 
+            .attr("x", 96)
+            .attr("y", 56)
+        {% elif planet.i == 5 %}                                 
+            .attr("x", 81)
+            .attr("y", 87)
+        {% elif planet.i == 6 %}                                 
+            .attr("x", 50)
+            .attr("y", 99)
+        {% elif planet.i == 7 %}                                 
+            .attr("x", 19)
+            .attr("y", 87)
+        {% endif %}
+        .attr("font-family", "sans-serif")
+        .attr("font-size", "2px")
+        .attr("fill", "white") 
+        {% for setting in settings %}
+        {% if planet.owner.id == status.user.id and setting.map_setting == "YP" %}
+        .attr("fill", "{{ setting.get_color_settings_display }}")
+        {% elif planet.owner == None and setting.map_setting == "UE" %}
+        .attr("fill", "{{ setting.get_color_settings_display }}")
+        {% elif setting.map_setting == "PF" and planet.owner.id == setting.faction.id %}
+        .attr("fill", "{{ setting.get_color_settings_display }}")
+        {% endif %}
+        {% endfor %}
+        .attr("text-anchor", "middle") // horizontal centering
+        .attr("allignment-baseline", "after-edge") // vertical centering                
+        {% if planet.owner.id == status.user.id %}
+        .text("{{status.user_name}}");        
+        {% elif planet.owner == None  and planet.home_planet %}
+        .text("This planet is unavailable");
+        {% elif planet.owner == None %}
+        .text("Unexplored");
+        {% elif planet.owner.id != status.user.id %}
+        .text("{{planet.owner.userstatus.user_name}}");
+        {% endif %}
+              
+{% endfor %}
+</script>
+
+
+{% endblock %}

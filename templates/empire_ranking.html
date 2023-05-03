@@ -1,0 +1,87 @@
+{% extends "base.html" %}
+
+{% load django_tables2 %}
+
+{% load static %}
+
+{% block content %}
+
+<style type="text/css">
+
+.row1{}
+
+.row2{
+display: table-row;
+background-color: rgb(25,38,51);
+}
+
+</style>
+
+{% if round.artetimer == 0 %}
+<b style="color: red" size="14">Round has finished, congratulations {{artis.empire_holding.name_with_id}}! New round registration will begin soon.</b>
+<br>
+<br>
+<br>
+{% elif round.artetimer < 1440 %}
+<b style="color: red" size="14">Artefacts held by {{artis.empire_holding.name_with_id}}. Round will end in {{round.artetimer}} Weeks!</b>
+<br>
+<br>
+{% endif %}
+<table style="width:100%;">
+<tr>
+
+<td style="width:2%"><u></u></td>
+<td style="width:20%"><u></u></td>
+<td style="width:30%; text-align:left"><u>Empire</u></td>
+<td style="width:14%"><u>Planets</u></td>
+<td style="width:11%"><u>Players</u></td>
+<td style="width:23%"><u>Networth</u></td>
+
+</tr>
+{% for empire, values in table.items %}
+<tr class="{% cycle 'row2' 'row1' %}">
+<td>{{ forloop.counter }}</td>
+<td style="text-align:right">
+
+
+{% if values.artefacts is not None %}
+	{% for a in values.artefacts %}
+	<img src="{{a.image}}" title="{{a.name}}">
+	{% endfor %}
+{% endif %}
+
+{% for a in all_artis %}
+
+{% if status.id == 1 and a.empire_holding.name_with_id == empire %}
+<img src="{{a.image}}" title="{{a.name}}">
+
+{% endif %}
+{% endfor %}
+
+</td>
+<td style="text-align:left">
+    {% if empire == "Empire #0" %}<b><a href= "/empire{{values.empire_id}}" style="color:Yellow;">Administration #0
+    {% elif empire == status.empire.name_with_id %}<b><a href= "/empire{{values.empire_id}}" style="color:#0293FF;">{{empire}}
+    {% else %} <b><a href = "/empire{{values.empire_id}}" >{{empire}}
+    {% endif %}
+{% for rel in relations %}
+{% if rel.empire1.name_with_id == empire or rel.empire2.name_with_id == empire %}
+<font color="Red"> @WAR</font>
+{% endif %}
+{% endfor %}
+</a></b></td>
+<td>{{values.planets}}</td>  
+<td>{{values.numplayers}}</td> 
+<td>{{values.nw}}</td> 
+</tr>
+{% endfor %}
+</table>
+
+<br>
+Artefacts found:<br>
+{% for arti in artefacts_found %}
+<img src="{{arti.image}}" alt="{{arti.name}}" title="{{arti.name}}"></td> 
+{{arti.name}} -  {{ arti.description }}<br>
+{% endfor %}
+{% endblock %}
+

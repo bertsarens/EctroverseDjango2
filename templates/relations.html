@@ -1,0 +1,101 @@
+{% extends "base.html" %}
+
+{% load static %}
+
+{% block content %}
+
+<style>
+#table_left_text td 
+{
+    text-align: left; 
+    vertical-align: middle;
+}
+
+</style>
+
+Message from your leader:<br>
+{{empire.relations_message}}
+<br>
+<table id="table_left_text" align="center" style= "border-spacing: 10px; border-collapse: separate;" } >
+
+{% for relation in relations_from_empire %}
+	{% if relation.relation_type == 'AO' %}
+	<tr>
+	<td><img src="{% static '/news/ally_offered.gif' %}"></td>
+	<td>You offered an empire {{relation.empire2.name_with_id}} an alliance!</td>
+	</tr>
+	{% endif %}
+	{% if relation.relation_type == 'A' %}
+	<tr>
+	<td><img src="{% static '/news/ally_made.gif' %}"></td>
+	<td>You have an alliance with empire {{relation.empire2.name_with_id}}!</td>
+	</tr>
+	{% endif %}
+	{% if relation.relation_type == 'W' %}
+	<tr>
+	<td><img src="{% static '/news/war_declared.gif' %}"></td>
+	<td>You have declared war on {{relation.empire2.name_with_id}}! -
+	It will last for another {{relation.relation_remaining_time}} galactic weeks!</td>
+	</tr>
+	{% endif %}
+	{% if relation.relation_type == 'NO' %}
+		<tr>
+		<td><img src="{% static '/news/nap_offered.gif' %}"></td>
+		{% if relation.relation_length > 0 %}
+		<td>You offered an empire {{relation.empire2.name_with_id}} a {{relation.relation_length}} galactic weeks
+		non - agression pact!</td>
+		{% else %}
+		<td>You offered an empire {{relation.empire2.name_with_id}} a permanent
+		non - agression pact!</td>
+		{% endif %}
+		</tr>
+	{% endif %}
+	{% if relation.relation_type == 'N' %}
+		<tr>
+		<td><img src="{% static '/news/nap_made.gif' %}"></td>
+		{% if relation.relation_length > 0 %}
+		<td>You have a {{relation.relation_length}} galactic weeks non - agression pact 
+		with {{relation.empire2.name_with_id}} !</td>
+		{% else %}
+		<td>You have a permanent non - agression pact with {{relation.empire2.name_with_id}} !</td>
+		{% endif %}
+		</tr>
+	{% endif %}
+	{% if relation.relation_type == 'NC' %}
+		<tr>
+		<td><img src="{% static '/news/nap_cancelled.gif' %}"></td>
+		<td>Non-agression pact with  {{relation.empire2.name_with_id}} was canceled!
+			It will last for another {{relation.relation_remaining_time}} galactic weeks!</td>
+			</tr>
+	{% endif %}
+{% endfor %}
+<tr></tr>
+{% for relation in relations_to_empire %}
+	{% if relation.relation_type == 'AO' %}
+	<tr>
+	<td><img src="{% static '/news/ally_offered.gif' %}"></td>
+	<td>Empire {{relation.empire1.name_with_id}} has offered you an alliance!</td>
+	</tr>
+	{% endif %}
+	{% if relation.relation_type == 'W' %}
+	<tr>
+	<td><img src="{% static '/news/war_declared.gif' %}"></td>
+	<td>Empire {{relation.empire1.name_with_id}} has declared war!</td>
+	<td>It will last for another {{relation.relation_remaining_time}} galactic weeks!</td>
+	</tr>
+	{% endif %}
+	{% if relation.relation_type == 'NO' %}
+		<tr>
+		<td><img src="{% static '/news/nap_offered.gif' %}"></td>
+		{% if relation.relation_length > 0 %}
+		<td>An empire {{relation.empire1.name_with_id}} has offered a {{relation.relation_length}} galactic weeks
+		non - agression pact!</td>
+		{% else %}
+		<td>An empire {{relation.empire1.name_with_id}} has offered a permanent
+		non - agression pact!</td>
+		{% endif %}
+		</tr>
+	{% endif %}
+{% endfor %}
+</table>
+{% endblock %}

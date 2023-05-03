@@ -1,0 +1,385 @@
+{% extends "base.html" %}
+
+{% load static %}
+{% load mathfilters %}
+
+{% block content %}
+
+<style>
+.news_parent_container{
+	width:100%;
+	float:left;
+	margin: 5px auto;
+}
+
+.left_news{
+	width: 10%;
+	min-width: 55px;
+	float:left;
+}
+
+.right_news{
+	width: 90%;
+	float:left;
+	text-align: left;
+}
+
+@media all and (max-width: 660px) {
+	.left_news{
+		width: 100%;
+		margin: 0 auto;
+	}
+	right_news{
+		width: 100%;
+		text-align: center !important;
+	}
+}
+
+@media all and (min-width: 661px) {
+
+	.left_news{
+		width: 10%;
+		margin: 0 auto;
+	}
+	
+	right_news{
+		width: 90%;
+		text-align: left !important;
+	}
+}
+
+</style>
+
+<br>
+
+	{% for n in news %}	
+		{% if n.news_type == 'SE' %}
+			<div class="news_parent_container">
+				<div class="left_news"><img src="{% static '/news/successfull_exploration.gif' %}"></div>
+				<div class="right_news">
+				<i>Week {{ n.tick_number|mod:52 }}, year {{ n.tick_number|intdiv:52 }}</i><br>
+				An exploration ship of {{n.user1.userstatus.user_name}} reached the <a href="/planet{{n.planet.id}}">
+				planet {{n.planet.x}},{{n.planet.y}}:{{n.planet.i}}</a> and established a colony.
+				{% if n.planet.artefact is not None %}
+					An old and powerfull artefact: {{ n.planet.artefact.name }} 
+					<img src="{{n.planet.artefact.image}}" alt="{{n.planet.artefact.name}}" title="Artefact">
+					is present on this planet!<br>
+				{% endif %}
+				</div>
+			</div>
+		{% endif %}
+		{% if n.news_type == 'UE' %}
+			<div class="news_parent_container">
+				<div class="left_news"><img src="{% static '/news/uncessessfull_exploration.png' %}"></div>
+				<div class="right_news">
+				<i>Week {{ n.tick_number|mod:52 }}, year {{ n.tick_number|intdiv:52 }}</i><br>
+				An exploration ship of {{n.user1.userstatus.user_name}} reached the <a href="/planet{{n.planet.id}}">
+				planet {{n.planet.x}},{{n.planet.y}}:{{n.planet.i}}</a> but the planet was already habited.</div>
+			</div>
+		{% endif %}
+		{% if n.news_type == 'RWD' %}
+			<div class="news_parent_container">
+				<div class="left_news"><img src="{% static '/news/war_declared.gif' %}"></div>
+				<div class="right_news">
+				<i>Week {{ n.tick_number|mod:52 }}, year {{ n.tick_number|intdiv:52 }}</i><br>
+				{% if current_empire == n.empire1 %}
+					Your empire has declared war on <a href="/empire{{n.empire2.id}}">Empire {{n.empire2.number}}</a>!
+				{% else %}
+					<a href="/empire{{n.empire1.id}}">Empire {{n.empire1.number}}</a> declared war on your empire!
+				{% endif %}
+				</div>
+			</div>
+		{% endif %}
+		{% if n.news_type == 'RNP' %}
+			<div class="news_parent_container">
+				<div class="left_news"><img src="{% static '/news/nap_offered.gif' %}"></div>
+				<div class="right_news">
+				<i>Week {{ n.tick_number|mod:52 }}, year {{ n.tick_number|intdiv:52 }}</i><br>
+				{% if current_empire == n.empire1 %}
+					Your empire has offered a {{n.extra_info}} non-aggression pact to <a href="/empire{{n.empire2.id}}">Empire {{n.empire2.number}}</a>!
+				{% else %}
+					<a href="/empire{{n.empire1.id}}">Empire {{n.empire1.number}}</a> has offered a {{n.extra_info}} non-aggression pact!
+				{% endif %}
+				</div>
+			</div>
+		{% endif %}
+		{% if n.news_type == 'RAP' %}
+			<div class="news_parent_container">
+				<div class="left_news"><img src="{% static '/news/ally_offered.gif' %}"></div>
+				<div class="right_news">
+				<i>Week {{ n.tick_number|mod:52 }}, year {{ n.tick_number|intdiv:52 }}</i><br>
+				{% if current_empire == n.empire1 %}
+					Your empire has offered an alliance to <a href="/empire{{n.empire2.id}}">Empire {{n.empire2.number}}</a>!
+				{% else %}
+					<a href="/empire{{n.empire1.id}}">Empire {{n.empire1.number}}</a> has offered an alliance!
+				{% endif %}
+				</div>
+			</div>
+		{% endif %}
+		{% if n.news_type == 'RWE' %}
+			<div class="news_parent_container">
+				<div class="left_news"><img src="{% static '/news/war_undeclared.gif' %}"></div>
+				<div class="right_news">
+				<i>Week {{ n.tick_number|mod:52 }}, year {{ n.tick_number|intdiv:52 }}</i><br>
+				{% if current_empire == n.empire1 %}
+					Your war with <a href="/empire{{n.empire2.id}}">Empire {{n.empire2.number}}</a> has ended!
+				{% else %}
+					Your war with <a href="/empire{{n.empire1.id}}">Empire {{n.empire1.number}}</a> has ended!
+				{% endif %}
+				</div>
+			</div>
+		{% endif %}
+		{% if n.news_type == 'RAE' %}
+			<div class="news_parent_container">
+				<div class="left_news"><img src="{% static '/news/ally_cancelled.gif' %}"></div>
+				<div class="right_news">
+				<i>Week {{ n.tick_number|mod:52 }}, year {{ n.tick_number|intdiv:52 }}</i><br>
+				{% if current_empire == n.empire1 %}
+					Your empire cancelled an alliance with <a href="/empire{{n.empire2.id}}">Empire {{n.empire2.number}}</a>!
+				{% else %}
+					<a href="/empire{{n.empire1.id}}">Empire {{n.empire1.number}}</a> cancelled an alliance with your empire!
+				{% endif %}
+				</div>
+			</div>
+		{% endif %}
+		{% if n.news_type == 'RNE' %}
+			<div class="news_parent_container">
+				<div class="left_news"><img src="{% static '/news/nap_cancelled.gif' %}"></div>
+				<div class="right_news">
+				<i>Week {{ n.tick_number|mod:52 }}, year {{ n.tick_number|intdiv:52 }}</i><br>
+				{% if current_empire == n.empire1 %}
+					Your Empire cancelled a non-aggression pact with <a href="/empire{{n.empire2.id}}">Empire {{n.empire2.number}}</a>!
+				{% else %}
+					<a href="/empire{{n.empire2.id}}">Empire {{n.empire2.number}}</a> cancelled a non-aggression pact with your empire!
+				{% endif %}
+				</div>
+			</div>
+		{% endif %}
+		{% if n.news_type == 'RAD' %}
+			<div class="news_parent_container">
+				<div class="left_news"><img src="{% static '/news/ally_made.gif' %}"></div>
+				<div class="right_news">
+				<i>Week {{ n.tick_number|mod:52 }}, year {{ n.tick_number|intdiv:52 }}</i><br>
+				{% if current_empire == n.empire1 %}
+					Your empire has made an alliance with <a href="/empire{{n.empire2.id}}">Empire {{n.empire2.number}}</a>!
+				{% else %}
+					Your empire has made an alliance with <a href="/empire{{n.empire2.id}}">Empire {{n.empire1.number}}</a>!
+				{% endif %}
+				</div>
+			</div>
+		{% endif %}
+		{% if n.news_type == 'RND' %}
+			<div class="news_parent_container">
+				<div class="left_news"><img src="{% static '/news/nap_made.gif' %}"></div>
+				<div class="right_news">
+				<i>Week {{ n.tick_number|mod:52 }}, year {{ n.tick_number|intdiv:52 }}</i><br>
+				{% if current_empire == n.empire1 %}
+					Your empire has made a {{n.extra_info}} non-aggression pact with <a href="/empire{{n.empire2.id}}">Empire {{n.empire2.number}}</a>!
+				{% else %}
+					Your empire has made a {{n.extra_info}} non-aggression pact with <a href="/empire{{n.empire1.id}}">Empire {{n.empire1.number}}</a>!
+				{% endif %}
+				</div>
+			</div>
+		{% endif %}
+		{% if n.news_type == 'SI' %}
+			<div class="news_parent_container">
+				<div class="left_news"><img src="{% static '/news/aid_sent.gif' %}"></div>
+				<div class="right_news">
+				<i>Week {{ n.tick_number|mod:52 }}, year {{ n.tick_number|intdiv:52 }}</i><br>
+				{{n.user1.userstatus.user_name}} has sent an aid shipment of {{n.extra_info}} to {{n.user2}}.
+				</div>
+			</div>
+		{% endif %}
+		{% if n.news_type == 'RA' %}
+			<div class="news_parent_container">
+				<div class="left_news"><img src="{% static '/news/aid_received.gif' %}"></div>
+				<div class="right_news">
+				<i>Week {{ n.tick_number|mod:52 }}, year {{ n.tick_number|intdiv:52 }}</i><br>
+				<a href="/account{{n.user.id}}">{{n.user.userstatus.user_name1}}</a> has requested an aid shipment of {{n.extra_info}} from {{n.user2}}.
+				</div>
+			</div>
+		{% endif %}
+		{% if n.news_type == 'PD' %}
+			<div class="news_parent_container">
+				{% if n.user1 == n.user2 %} 
+				<div class="left_news"><img src="{% static '/news/outgoing_spell.gif' %}"></div>
+				{% else %}
+				<div class="left_news"><img src="{% static '/news/incoming_spell.png' %}"></div>
+				{% endif %}
+				
+				<div class="right_news">
+				<i>Week {{ n.tick_number|mod:52 }}, year {{ n.tick_number|intdiv:52 }}</i><br>
+				{% if n.user1 == n.user2 %} 
+					{{n.user1.userstatus.user_name}} has performed a {{ n.fleet1 }} spell!
+				{% else %}
+					{{n.user1.userstatus.user_name}} was a target of {{ n.fleet1 }} spell
+					{% if n.user1 == 0 %}
+						performed by unknown faction!
+					{% else %}
+						performed by {{n.user2}}!
+					{% endif %}
+				{% endif %}
+				<br>
+				The results: {{n.extra_info}}
+				</div>
+			</div>
+		{% endif %}
+		{% if n.news_type == 'PA' %}
+			<div class="news_parent_container">
+				<div class="left_news"><img src="{% static '/news/outgoing_spell.gif' %}"></div>
+				<div class="right_news">
+				<i>Week {{ n.tick_number|mod:52 }}, year {{ n.tick_number|intdiv:52 }}</i><br>
+				{{n.user1.userstatus.user_name}}'s psychics have casted a {{ n.fleet1 }} spell on <a href="/account{{n.user2.id}}">{{n.user2.userstatus.user_name}}</a>!
+				<br>
+				The results: {{n.extra_info}}
+				</div>
+			</div>
+		{% endif %}
+		{% if n.news_type == 'AA' %}
+			<div class="news_parent_container">
+				<div class="left_news"><img src="{% static '/news/outgoing_operation.gif' %}"></div>
+				<div class="right_news">
+				<i>Week {{ n.tick_number|mod:52 }}, year {{ n.tick_number|intdiv:52 }}</i><br>
+				<a href="/account{{n.user1.id}}">{{n.user1.userstatus.user_name}}'s</a> agents have performed a {{ n.fleet1 }} operation on planet <a href="planet{{n.planet.id}}">{{n.planet.x}},{{n.planet.y}}:{{n.planet.i}}</a>
+				{% if n.user2 is not None %}
+				owned by <a href="/account{{n.user2.id}}">{{n.user2.userstatus.user_name}}</a>
+				{% else %}
+				currently uninhabited.
+				{% endif %}
+				<br>
+				The results: {{n.extra_info|linebreaksbr}}
+				</div>
+			</div>
+		{% endif %}
+		{% if n.news_type == 'AD' %}
+			<div class="news_parent_container">
+				<div class="left_news"><img src="{% static '/news/outgoing_operation.gif' %}"></div>
+				<div class="right_news">
+				<i>Week {{ n.tick_number|mod:52 }}, year {{ n.tick_number|intdiv:52 }}</i><br>
+				<a href="/account{{n.user1.id}}">{{n.user1.userstatus.user_name}}'s</a> agents have intercepted some enemy agents from
+				{% if n.user2 != None %}
+				<a href="/account{{n.user2.id}}">{{n.user2.userstatus.user_name}}</a> of <a href="/empire{{n.empire2.id}}">{{n.empire2.name_with_id}}</a>
+				{% else %}
+				an unknown faction 
+				{% endif %}
+				performing a {{ n.fleet1 }} operation
+				on planet <a href="planet{{n.planet.id}}">{{n.planet.x}},{{n.planet.y}}:{{n.planet.i}}</a>
+				<br>
+				The results: {{n.extra_info|linebreaksbr}}
+				</div>
+			</div>	
+		{% endif %}
+		{% if n.news_type == 'GA' %}
+			<div class="news_parent_container">
+				<div class="left_news"><img src="{% static '/news/outgoing_incantation.gif' %}"></div>
+				<div class="right_news">
+				<i>Week {{ n.tick_number|mod:52 }}, year {{ n.tick_number|intdiv:52 }}</i><br>
+				<a href="/account{{n.user1.id}}">{{n.user1.userstatus.user_name}}'s</a> Ghost Ships have performed a {{ n.fleet1 }} Incantation on planet <a href="planet{{n.planet.id}}">{{n.planet.x}},{{n.planet.y}}:{{n.planet.i}}</a>
+				{% if n.user2 is not None %}
+				owned by <a href="/account{{n.user2.id}}">{{n.user2.userstatus.user_name}}</a> of <a href="/empire{{n.empire2.id}}">{{n.empire2.name_with_id}}</a>
+				{% else %}
+				currently uninhabited.
+				{% endif %}
+				<br>
+				The results: {{n.extra_info|linebreaksbr}}
+				</div>
+			</div>
+		{% endif %}
+		{% if n.news_type == 'GD' %}
+			<div class="news_parent_container">
+				<div class="left_news"><img src="{% static '/news/outgoing_incantation.gif' %}"></div>
+				<div class="right_news">
+				<i>Week {{ n.tick_number|mod:52 }}, year {{ n.tick_number|intdiv:52 }}</i><br>
+				<a href="/account{{n.user1.id}}">{{n.user1.userstatus.user_name}}'s</a> Psychics have prevented some enemy Ghost Ships from
+				{% if n.user2 != None %}
+				<a href="/account{{n.user2.id}}">{{n.user2.userstatus.user_name}}</a> of <a href="/empire{{n.empire2.id}}">{{n.empire2.name_with_id}}</a>
+				{% else %}
+				an unknown faction 
+				{% endif %}
+				performing a {{ n.fleet1 }} operation
+				on planet <a href="planet{{n.planet.id}}">{{n.planet.x}},{{n.planet.y}}:{{n.planet.i}}</a>
+				<br>
+				The results: {{n.extra_info|linebreaksbr}}
+				</div>
+			</div>	
+		{% endif %}
+		{% if n.news_type == 'SA' %}
+			<div class="news_parent_container">
+				<div class="left_news"><img src="{% static '/news/successfull_attack.gif' %}"></div>
+				<div class="right_news">
+				<i>Week {{ n.tick_number|mod:52 }}, year {{ n.tick_number|intdiv:52 }}</i><br>
+				<a href="/account{{n.user1.id}}">{{n.user1.userstatus.user_name}}</a> attacked and took control of the <a href="planet{{n.planet.id}}">planet {{n.planet.x}},{{n.planet.y}}:{{n.planet.i}}</a> 
+				previously owned by <a href="/account{{n.user2.id}}">{{n.user2.userstatus.user_name}}</a> from <a href="/empire{{n.empire2.id}}">{{n.empire2.name_with_id}}</a>!
+				<br>
+					<div class = "wrap_box">
+						<div class = "left_news_battle">
+						<u>Attacker losses:</u><br> {{n.fleet1|linebreaksbr}}
+						</div>
+						<div class = "right_news_battle">
+						<u>Defender losses:</u><br>  {{n.fleet2|linebreaksbr}}
+						</div>
+					</div>
+				</div>
+			</div>
+		{% endif %}
+		{% if n.news_type == 'UA' %}
+			<div class="news_parent_container">
+				<div class="left_news"><img src="{% static '/news/uncessessfull_attack.png' %}"></div>
+				<div class="right_news">
+				<i>Week {{ n.tick_number|mod:52 }}, year {{ n.tick_number|intdiv:52 }}</i><br>
+				<a href="/account{{n.user.id}}">{{n.user1.userstatus.user_name}}</a> attacked and failed to capture the <a href="planet{{n.planet.id}}">planet {{n.planet.x}},{{n.planet.y}}:{{n.planet.i}}</a> 
+				owned by <a href="/account{{n.user2.id}}">{{n.user2.userstatus.user_name}}</a> from <a href="/empire{{n.empire2.id}}">{{n.empire2.name_with_id}}</a>!
+				<br>
+					<div class = "wrap_box">
+						<div class = "left_news_battle">
+						<u>Attacker losses:</u><br> {{n.fleet1|linebreaksbr}}
+						</div>
+						<div class = "right_news_battle">
+						<u>Defender losses:</u><br>  {{n.fleet2|linebreaksbr}}
+						</div>
+					</div>
+				</div>
+			</div>
+		{% endif %}
+		{% if n.news_type == 'SD' %}
+			<div class="news_parent_container">
+				<div class="left_news"><img src="{% static '/news/successfull_defence.gif' %}"></div>
+				<div class="right_news">
+				<i>Week {{ n.tick_number|mod:52 }}, year {{ n.tick_number|intdiv:52 }}</i><br>
+				The <a href="planet{{n.planet.id}}">planet {{n.planet.x}},{{n.planet.y}}:{{n.planet.i}}</a>, owned by <a href="/account{{n.user.id}}">{{n.user1.userstatus.user_name}}</a>, was unsuccessfully attacked by
+				<a href="/account{{n.user2.id}}">{{n.user2.userstatus.user_name}}</a> from <a href="/empire{{n.empire2.id}}">{{n.empire2.name_with_id}}</a>!
+				<br>
+					<div class = "wrap_box">
+						<div class = "left_news_battle">
+						<u>Attacker losses:</u><br> {{n.fleet2|linebreaksbr}}
+						</div>
+						<div class = "right_news_battle">
+						<u>Defender losses:</u><br>  {{n.fleet1|linebreaksbr}}
+						</div>
+					</div>
+				</div>
+			</div>
+		{% endif %}
+		{% if n.news_type == 'UD' %}
+			<div class="news_parent_container">
+				<div class="left_news"><img src="{% static '/news/uncessessfull_defence.png' %}"></div>
+				<div class="right_news">
+				<i>Week {{ n.tick_number|mod:52 }}, year {{ n.tick_number|intdiv:52 }}</i><br>
+				The <a href="planet{{n.planet.id}}">planet {{n.planet.x}},{{n.planet.y}}:{{n.planet.i}}</a>, owned by <a href="/account{{n.user.id}}">{{n.user1.userstatus.user_name}}</a>, was lost
+				to <a href="/account{{n.user2.id}}">{{n.user2.userstatus.user_name}}</a> from <a href="/empire{{n.empire2.id}}">{{n.empire2.name_with_id}}</a>!
+				<br>
+					<div class = "wrap_box">
+						<div class = "left_news_battle">
+						<u>Attacker losses:</u><br> {{n.fleet2|linebreaksbr}}
+						</div>
+						<div class = "right_news_battle">
+						<u>Defender losses:</u><br>  {{n.fleet1|linebreaksbr}}
+						</div>
+					</div>
+				</div>
+			</div>
+		{% endif %}
+	
+	{% endfor %}
+
+{% endblock %}
