@@ -4,9 +4,9 @@
 
 {% load mathfilters %}
 {% load tags %}
-<div id="mapdiv" style="background: black">
-  <svg version="1.0" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 {{ maxX|mul:12|add:24 }} {{ maxY|mul:12|add:24}}" height="60%"
-    width="80%">
+<div id="mapdiv" data-pan-on-drag="" data-zoom-on-wheel="min-scale: 0.3; max-scale: 1000;" style="width: calc(95% - 10px); height: calc(95% - 10px); background: black; margin: auto;">
+  <svg id="svgid" version="1.0" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 2400 2400" height="{{ maxX|mul:12|add:24 }}"
+    width="{{ maxY|mul:12|add:24}}">
     {% for key in mapgen %}
     {% with o=mapgen|getvalue:key %}
     <a xlink:href="system{{ o.id }}">
@@ -46,10 +46,11 @@
         {% endif %}
         <title>{{ o.x }}, {{ o.y }}</title>
       </g>
-    </a>
     {% endif %}
+    </a>
     {% endwith %}
     {% endfor %}
   </svg>
 </div>
+<script src="https://cdn.jsdelivr.net/npm/svg-pan-zoom-container@0.5.2"></script>
 {% endblock %}
