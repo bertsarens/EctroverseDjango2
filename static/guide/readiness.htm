@@ -1,0 +1,371 @@
+<html>
+
+
+<!-- Mirrored from starfury.ectroverse.net/Guide/readiness.htm by HTTrack Website Copier/3.x [XR&CO'2004], Sat, 29 May 2004 20:22:53 GMT -->
+<head>
+<meta http-equiv="Content-Language" content="en-us">
+<meta http-equiv="Content-Type" content="text/html; charset=windows-1252">
+<meta name="GENERATOR" content="Microsoft FrontPage 4.0">
+<meta name="ProgId" content="FrontPage.Editor.Document">
+<title>Readiness</title>
+</head>
+
+<body bgcolor="#000000" text="#CCFFFF" link="#00FF00" vlink="#00FF00" alink="#00FF00" background="pics/mbg.gif">
+
+<table cellSpacing="0" cellPadding="0" width="90%" align="center" background="pics/i27.jpg" border="0">
+  <tbody>
+    <tr>
+      <td width="10%"><img src="pics/i25.jpg" width="22" height="24"></td>
+      <td noWrap align="middle" width="80%">&nbsp;</td>
+      <td align="right" width="10%"><img src="pics/i30.jpg" width="62" height="24"></td>
+    </tr>
+  </tbody>
+</table>
+<table cellSpacing="0" cellPadding="0" width="90%" align="center" border="0">
+  <tbody>
+    <tr>
+      <td width="7" background="pics/i38.jpg">&nbsp;</td>
+      <td align="middle" bgColor="#0c1921">
+<p align="center"><b><font size="5">Readiness</font></b></p>
+<p align="left"><b><font size="4">Fleet Readiness (FR):</font></b></p>
+<p align="left">Fleet readiness is a measure of how ready your forces are for
+another combat. The highest it can be is 100%, which means that your army is
+good to fight another battle. But as you keep on attacking you fleet readiness
+will decrease, the amount you lose each attack depends on the size of faction you
+attack compared to your own size. The smaller the other faction is compared to
+you, the more FR you will lose. Also exploring empty planets will take down your FR, and
+the more planets you have the more FR it will take to explore every next planet.
+Sooner or later your FR will become negative and you will not be able to explore
+anymore, but you will still be able to attack, though your forces will be a lot
+less effective in combat, the lower your FR goes the less effective your forces
+will be. If you FR passes -100% mark not only would you not be able to attack
+anymore but some of units will start to desert, so try not to make your FR go
+that low. Here is the calculator to calculate how much FR you will lose
+according to number of your planets, your targets planets and respective
+empires, if you want to see the formulas
+themselves go <a href="nerd.htm">here</a>.</p>
+
+
+
+<form name="frLoss">
+
+<p align="left"><font size="5">Readiness Loss Calculator</font>
+<p align="left"><input type="text" name="myPl" size="10" reset>Number
+          of my planets<br>
+          <input type="text" name="hisPl" size="10" reset>Number of his planets<br>
+          <input type="text" name="emPl" size="10" reset># of planets of my
+Empire<br>
+          <input type="text" name="em2Pl" size="10" reset># of planets of his
+Empire<br>
+          <input type="submit" value="Calculate" onclick="
+var frOne=document.frLoss.myPl.value; 
+var frTwo=document.frLoss.hisPl.value; 
+var frThree=document.frLoss.emPl.value;
+var frFour=document.frLoss.em2Pl.value;
+var P1=(frOne-(-1));
+var P2=(frTwo-(-1));
+var E1=(frThree-(-1));
+var E2=(frFour-(-1));
+
+
+var IF1=(P1/P2);
+var IF2=Math.pow(IF1,1.2);
+var IF4=0.5*(IF2-(-1));
+if (IF4 < 0.5)
+{
+ IF4=0.5;
+}
+IF5=IF4*12.5/3;
+
+var nor1=(P1/P2);
+var nor2=Math.pow(nor1,1.8);
+var nor3=(E1/E2);
+var nor4=Math.pow(nor3,1.2);
+var nor5=0.5*(nor2+nor4);
+if (nor5 < 0.5)
+{
+ nor5=0.5;
+}
+nor6=nor5*12.5;
+war=nor6/3;
+
+
+if (nor6 > 300)
+{
+ nor6=300;
+}
+
+if (war > 300)
+{
+ war=300;
+}
+
+if (IF5 > 50)
+{
+ IF5=50;
+}
+document.frLoss.Nor.value=Math.round(nor6);
+document.frLoss.War.value=Math.round(war);
+document.frLoss.IF.value=Math.round(IF5);
+
+return false" /><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Normal attack:&nbsp; <input name="Nor" size="5" style="background-color: #0C1921; color: #FF0000; font-weight: bold; border-style: solid; border-color: #0C1921" />&nbsp;&nbsp;&nbsp;<br>
+Attack
+          during war:&nbsp; <input name="War" size="5" style="background-color: #0C1921; color: #FF0000; font-weight: bold; border-style: solid; border-color: #0C1921" />&nbsp;&nbsp;&nbsp;&nbsp;<br>
+Intra-family attack:&nbsp;&nbsp;<input name="IF" size="5" style="background-color: #0C1921; color: #FF0000; font-weight: bold; border-style: solid; border-color: #0C1921" />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+
+</p>
+
+</form>
+
+<p align="left">Note: it takes maximum 20% fr to attack an <a href="arti.htm">artifact</a>.</p>
+<p align="center">
+<font color="#66CCFF" size="4">---------------------------------------------------------------------------------------------------------------------</font></p>
+<p align="left"><b><font size="4">Psychic/Agent Readiness:</font></b></p>
+<p align="left">This is a measure of how ready your agents, psychics or ghost
+ships are to perform
+another spell. This is analogous to Fleet Readiness, the only difference is that
+this affects your fleet in no way, but rather your agents and psychics. The
+formula for this is somewhat similar in parts to the one of Fleet Readiness and
+can be found <a href="nerd.htm">here</a>.<br>
+(Note: Ghost ships and Psychics both use Psychic readiness)</p>
+
+<form name="arLoss">
+<p align="left">
+<input type="text" name="myPl" size="10"> Number of my planets<br>
+<input type="text" name="hisPl" size="10"> Number of his planets<br>
+<input type="text" name="emPl" size="10">  # of planets of my Empire<br>
+<input type="text" name="em2Pl" size="10">  # of planets of his Empire<br>
+<input type="text" name="myRes" size="5">   my Op/Welfare research (Op research
+for Agent Operations, Welfare for Psychic Spells and Ghost Ship Incantations)<br>
+<br>
+<select size="1" name="D1">
+  <option>***Operations***</option>
+  <option value="Spy Target">Spy Target</option>
+  <option value="Observe Planet">Observe Planet</option>
+  <option value="Network Virus">Network Virus</option>
+  <option value="Infiltration">Infiltration</option>
+  <option value="Bio Infection">Bio Infection</option>
+  <option value="Energy Transfer">Energy Transfer</option>
+  <option value="Military Sabotage">Military Sabotage</option>
+  <option value="Nuke Planet">Nuke Planet</option>
+  <option value="High Infiltration">High Infiltration</option>
+  <option>***Spells***</option>
+  <option value="Irradiate ectrolium">Irradiate ectrolium</option>
+  <option value="Dark Web">Dark Web</option>
+  <option value="Incandescence">Incandescence</option>
+  <option value="Black Mist">Black Mist</option>
+  <option value="War Illusion">War Illusion</option>
+  <option value="Phantoms">Phantoms</option>
+  <option>***Incantations***</option>
+  <option value="Sense Artifact">Sense Artifact</option>
+  <option value="Survey System">Survey System</option>
+  <option value="Planetary Shielding">Planetary Shielding</option>
+  <option value="Portal Force Field">Portal Force Field</option>
+  <option value="Vortex Portal">Vortex Portal</option>
+  <option value="Mind Control">Mind Control</option>
+  <option value="Energy Surge">Energy Surge</option>
+  </select>Chose Operation<br>
+
+<input type="submit" value="Calculate" onclick="  
+
+var arOne=document.arLoss.myPl.value;  
+var arTwo=document.arLoss.hisPl.value;  
+var arThree=document.arLoss.emPl.value;  
+var arFour=document.arLoss.em2Pl.value;
+var arRes=document.arLoss.myRes.value;  
+  
+  
+if (document.arLoss.D1.value=='Spy Target')  
+{  
+  var req=0;  
+  var red=12;  
+}  
+if (document.arLoss.D1.value=='Observe Planet')  
+{  
+  var req=0;  
+  var red=5;  
+}  
+if (document.arLoss.D1.value=='Network Virus')  
+{  
+  var req=20;  
+  var red=20;  
+}  
+if (document.arLoss.D1.value=='Infiltration')  
+{  
+  var req=40;  
+  var red=18;  
+}  
+if (document.arLoss.D1.value=='Bio Infection')  
+{  
+  var req=60;  
+  var red=25;  
+}  
+if (document.arLoss.D1.value=='Energy Transfer')  
+{  
+  var req=80;  
+  var red=22;  
+}  
+if (document.arLoss.D1.value=='Military Sabotage')  
+{  
+  var req=100;  
+  var red=30;  
+}  
+if (document.arLoss.D1.value=='Nuke Planet')  
+{  
+  var req=120;  
+  var red=20;  
+}  
+if (document.arLoss.D1.value=='High Infiltration')  
+{  
+  var req=160;  
+  var red=40;  
+}  
+if (document.arLoss.D1.value=='Irradiate ectrolium')  
+{  
+  var req=0;  
+  var red=12;  
+}  
+if (document.arLoss.D1.value=='Dark Web')  
+{  
+  var req=0;  
+  var red=18;  
+}  
+if (document.arLoss.D1.value=='Incandescence')  
+{  
+  var req=0;  
+  var red=30;  
+}  
+if (document.arLoss.D1.value=='Black Mist')  
+{  
+  var req=50;  
+  var red=24;  
+}  
+if (document.arLoss.D1.value=='War Illusion')  
+{  
+  var req=70;  
+  var red=30;  
+}  
+if (document.arLoss.D1.value=='Phantoms')  
+{  
+  var req=110;  
+  var red=40;  
+}  
+
+if (document.arLoss.D1.value=='Sense Artifact')  
+{  
+  var req=20;  
+  var red=60;  
+}  
+if (document.arLoss.D1.value=='Survey System')  
+{  
+  var req=40;  
+  var red=20;  
+}  
+if (document.arLoss.D1.value=='Planetary Shielding')  
+{  
+  var req=60;  
+  var red=40;  
+}  
+if (document.arLoss.D1.value=='Portal Force Field')  
+{  
+  var req=80;  
+  var red=30;  
+}  
+if (document.arLoss.D1.value=='Vortex Portal')  
+{  
+  var req=100;  
+  var red=60;  
+}  
+if (document.arLoss.D1.value=='Mind Control')  
+{  
+  var req=120;  
+  var red=40;  
+}  
+if (document.arLoss.D1.value=='Energy Surge')  
+{  
+  var req=140;  
+  var red=80;  
+}  
+
+
+var penalty=req-arRes;  
+if (penalty < 0)  
+{  
+ var arPenalty=1;  
+}  
+else  
+{  
+ arPenalty=Math.pow(penalty,1.2);  
+}  
+
+
+var Pl1=(arOne-(-1));
+var Pl2=(arTwo-(-1));
+var em3=(arThree-(-1));
+var em4=(arFour-(-1));
+
+var pa=Pl1/Pl2;
+var pb=em3/em4;
+var p1=Math.pow(pa,1.8);
+var p2=Math.pow(pb,1.2);
+var p3=(0.5*(p1-(-p2)));
+
+if (p3 < 0.75)
+{
+ p3=0.75;
+}
+
+p4=(((0.01*arPenalty)-(-1))*red*p3);
+
+p5=p4/3;
+
+
+
+if (p4 > 300)
+{
+ p4=300;
+}
+
+if (p5 > 300)
+{
+ p5=300;
+}
+  
+if (arPenalty >=150)  
+{  
+ alert('Cannot perform Operation');  
+ document.arLoss.Nor.value=0;  
+ document.arLoss.IF.value=0;    
+}  
+else  
+{  
+ document.arLoss.Nor.value=p4;  
+ document.arLoss.IF.value=p5;  
+}  
+return false" /><br>
+
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Normal
+op/spell:&nbsp; <input name="Nor" size="5" style="background-color: #0C1921; color: #FF0000; font-weight: bold; border-style: solid; border-color: #0C1921" />&nbsp;<br>
+War/Intra-family/Ally&nbsp; <input name="IF" size="5" style="background-color: #0C1921; color: #FF0000; font-weight: bold; border-style: solid; border-color: #0C1921" />
+</form>
+      </td>
+      <td width="7" background="pics/i43.jpg">&nbsp;</td>
+    </tr>
+  </tbody>
+</table>
+<table cellSpacing="0" cellPadding="0" width="90%" align="center" border="0">
+  <tbody>
+    <tr>
+      <td width="62"><img src="pics/i45.jpg" width="62" height="12"></td>
+      <td width="100%" background="pics/i47.jpg"><img src="i47.jpg" width="1" height="12"></td>
+      <td width="62"><img src="pics/i49.jpg" width="62" height="12"></td>
+    </tr>
+  </tbody>
+</table>
+
+</body>
+
+
+<!-- Mirrored from starfury.ectroverse.net/Guide/readiness.htm by HTTrack Website Copier/3.x [XR&CO'2004], Sat, 29 May 2004 20:22:53 GMT -->
+</html>

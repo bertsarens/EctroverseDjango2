@@ -1,0 +1,438 @@
+<html>
+
+
+<!-- Mirrored from starfury.ectroverse.net/Guide/fleet.htm by HTTrack Website Copier/3.x [XR&CO'2004], Sat, 29 May 2004 20:22:52 GMT -->
+<head>
+<meta http-equiv="Content-Language" content="en-us">
+<meta http-equiv="Content-Type" content="text/html; charset=windows-1252">
+<meta name="GENERATOR" content="Microsoft FrontPage 4.0">
+<meta name="ProgId" content="FrontPage.Editor.Document">
+<title>Fleet</title>
+</head>
+
+<body bgcolor="#000000" text="#CCFFFF" link="#00FF00" vlink="#00FF00" alink="#00FF00" background="pics/mbg.gif">
+
+<table cellSpacing="0" cellPadding="0" width="90%" align="center" background="pics/i27.jpg" border="0">
+  <tbody>
+    <tr>
+      <td width="10%"><img src="pics/i25.jpg" width="22" height="24"></td>
+      <td noWrap align="middle" width="80%">&nbsp;</td>
+      <td align="right" width="10%"><img src="pics/i30.jpg" width="62" height="24"></td>
+    </tr>
+  </tbody>
+</table>
+<table cellSpacing="0" cellPadding="0" width="90%" align="center" border="0">
+  <tbody>
+    <tr>
+      <td width="7" background="pics/i38.jpg">&nbsp;</td>
+      <td align="middle" bgColor="#0c1921">
+        <table border="1" width="100%">
+          <tr>
+            <td width="100%" colspan="2">
+<p align="center"><font size="5"><b>Fleet</b></font></p>
+<p align="left">In this screen you can organize and manage your fleets. In here
+you can everything from how many units you have to where your fleets are
+traveling and how many of them you have as well. Going from top to bottom, left
+to right here is a description of every function you can see in the fleet
+screen.</p>
+              <p>&nbsp;</td>
+          </tr>
+          <tr>
+            <td width="50%">First on top Left it shows you what your main fleet is composed
+of at the moment. Under the main fleet you can see a link to a disband page, on
+that page you can get rid of any units you do not want or cannot support. Notice
+that if you have a fleet traveling somewhere, then the units in that fleet won't
+be shown in the main fleet.</td>
+            <td width="50%"><b>Main fleet</b><br>
+        <br>
+        900 Bombers<br>
+        9000 Fighters<br>
+        900 Transports<br>
+        2700 Cruisers<br>
+        900 Carriers<br>
+        54000 Droids<br>
+        30000 Psychics<br>
+        30000 Agents<br>
+        20 Exploration ships<br>
+        Disband units</td>
+          </tr>
+          <tr>
+            <td width="50%">
+<p align="left">On top right are the Fleet orders. The very top of them lets you
+decided what to do with the fleet after you attack a planet. There are 3 choices
+in the drop-down menu. The default choice is to station the fleet on that planet
+(if you are successful in attacking of course). To unstation fleet from the
+planet, you will have to go to planet screen, click on the planet and then click
+unstation where the fleet is displayed The second choice is to wait in the
+system, if you select this instead of being stationed on the planet your fleet
+will wait in the system for further orders. And last option is to be recalled to
+main fleet, which will automatically send your fleet back to join the main fleet
+after the attack.</p>
+<p align="left">Under that you can see &quot;Approximations of enemy forces to flee battles&quot;,
+the initial values are as shows at 200%, 200%, 250% and 250%, that means that if the enemy forces for
+that stage of combat are more that 200% or 250% of your own you will retreat (ex. if
+you have 100 fighters and your enemy has 200 or more, then you will retreat). If
+you want to change those values just assign new ones and click on change.</p>
+              <p>&nbsp;</td>
+            <td width="50%">
+              <p align="center"><b>Fleets orders</b><br>
+              <form action="http://217.8.141.79:9990/fleets" method="post">
+                <table cellSpacing="8">
+                  <tbody>
+                    <tr>
+                      <td align="middle">Order after an attack</td>
+                    </tr>
+                    <tr>
+                      <td align="middle"><select name="attack">
+                          <option value="0">Station fleet on planet
+                          <option value="1" selected>Wait in system
+                          <option value="2">Recall to main fleet</option>
+                        </select></td>
+                    </tr>
+                    <tr>
+                      <td align="middle">Approximations of enemy forces to flee
+                        battles
+                    <tr>
+                      <td align="middle">
+                        <table>
+                          <tbody>
+                            <tr>
+                              <td noWrap align="right">Long-range attack</td>
+                              <td><input size="4" value="200" name="f0"> %</td>
+                            </tr>
+                            <tr>
+                              <td noWrap align="right">Air vs air</td>
+                              <td><input size="4" value="200" name="f1"> %</td>
+                            </tr>
+                            <tr>
+                              <td noWrap align="right">Ground vs air</td>
+                              <td><input size="4" value="250" name="f2"> %</td>
+                            </tr>
+                            <tr>
+                              <td noWrap align="right">Ground vs ground</td>
+                              <td><input size="4" value="250" name="f3"> %</td>
+                            </tr>
+                          </tbody>
+                        </table>
+                    <tr>
+                      <td align="middle"><input type="button" value="Change"></td>
+                    </tr>
+                  </tbody>
+                </table>
+              </form>
+              <p>&nbsp;</td>
+          </tr>
+          <tr>
+            <td width="100%" colspan="2">Further down you can see if you have any traveling fleets. There
+you can see if you have any fleets that are traveling anywhere, if there is more
+than 1 fleet they will displayed that way and each will have it's own
+destination and target and ETA (estimated time of arrival). If the fleet has
+arrived at it's destination instead of ETA you will see a link &quot;Ready to
+attack&quot; (exploration ships are an exception to that, they explore
+automatically when they get to their target). Click on the link to see the
+outcome of the battle. In details you can recall your fleet back as well as give
+them a different order.</td>
+          </tr>
+          <tr>
+            <td width="100%" colspan="2">
+<p align="center">
+<b>Traveling fleets</b><br>
+<br>
+<div align="center">
+  <center>
+  <table>
+    <tr>
+      <td width="18%">Units</td>
+      <td width="18%">Order</td>
+      <td width="18%">Status</td>
+      <td width="18%">Current position</td>
+      <td width="18%">Changes</td>
+    </tr>
+    <tr>
+      <td>100 Bombers<br>
+        1000 Fighters<br>
+        100 Transports<br>
+        300 Cruisers<br>
+        100 Carriers<br>
+        6000 Droids<br>
+      </td>
+      <td>Attack the planet <a href="planet_e.htm"> 1,3:4</a></td>
+      <td><a href="combat.htm">Ready to attack</a></td>
+      <td><a href="systems/system.htm">1,3</a></td>
+      <td><a href="fleet_detail.htm">Details</a></td>
+    </tr>
+  </table>
+  </center>
+</div>
+              <p>&nbsp;</td>
+          </tr>
+          <tr>
+            <td width="50%">Lastly at the very bottom you can see your main fleet, there you
+can dispatch a new fleet to a different target, simply type in how many of each
+unit you want to send, then select the order you want to give (you can chose
+from attack the planet, station on planet and move to system) and type in the
+coordinate of the planet or system and press &quot;Send&quot;. The fleet will
+appear in &quot;traveling fleets&quot; the next time you load the fleet page.</td>
+            <td width="50%">
+              <p align="center">D<b>ispatch a new fleet</b><br>
+              <br>
+              <form action="http://217.8.141.79:9990/fleetsend" method="post">
+                <select name="order">
+                  <option value="3" selected>Attack the planet
+                  <option value="1">Station on planet
+                  <option value="2">Move to system</option>
+                </select>
+                <table cellSpacing="8">
+                  <tbody>
+                    <tr>
+                      <td align="right">1000 Bombers</td>
+                      <td><input size="12" name="u0"></td>
+                    </tr>
+                    <tr>
+                      <td align="right">20000 Fighters</td>
+                      <td><input size="12" name="u1"></td>
+                    </tr>
+                    <tr>
+                      <td align="right">500 Transports</td>
+                      <td><input size="12" name="u2"></td>
+                    </tr>
+                    <tr>
+                      <td align="right">10000 Cruisers</td>
+                      <td><input size="12" name="u3"></td>
+                    </tr>
+                    <tr>
+                      <td align="right">500 Carriers</td>
+                      <td><input size="12" name="u4"></td>
+                    </tr>
+                    <tr>
+                      <td align="right">30000 Droids</td>
+                      <td><input size="12" name="u6"></td>
+                    </tr>
+                  </tbody>
+                </table>
+                X:<input size="4" name="X"> Y:<input size="4" name="Y"> Planet:<input size="4" name="Z"><br>
+                <br>
+                <input type="button" value="Send">
+              </form>
+              <p>&nbsp;</td>
+          </tr>
+        </table>
+      </td>
+      <td width="7" background="pics/i43.jpg">&nbsp;</td>
+    </tr>
+  </tbody>
+</table>
+<table cellSpacing="0" cellPadding="0" width="90%" align="center" border="0">
+  <tbody>
+    <tr>
+      <td width="62"><img src="pics/i45.jpg" width="62" height="12"></td>
+      <td width="100%" background="pics/i47.jpg"><img src="i47.jpg" width="1" height="12"></td>
+      <td width="62"><img src="pics/i49.jpg" width="62" height="12"></td>
+    </tr>
+  </tbody>
+</table>
+<p>&nbsp;</p>
+
+<table cellSpacing="0" cellPadding="0" width="90%" align="center" background="pics/i27.jpg" border="0">
+  <tbody>
+    <tr>
+      <td width="10%"><img src="pics/i25.jpg" width="22" height="24"></td>
+      <td noWrap align="middle" width="80%">&nbsp;</td>
+      <td align="right" width="10%"><img src="pics/i30.jpg" width="62" height="24"></td>
+    </tr>
+  </tbody>
+</table>
+<table cellSpacing="0" cellPadding="0" width="90%" align="center" border="0">
+  <tbody>
+    <tr>
+      <td width="7" background="pics/i38.jpg">&nbsp;</td>
+      <td align="middle" bgColor="#0c1921">
+<p align="center"><font size="5"><b>Here is how it would look like if it's not
+broken into parts</b></font></p>
+<table width="100%">
+  <tbody>
+    <tr>
+      <td vAlign="top" align="middle" width="50%"><b>Main fleet</b><br>
+        <br>
+        900 Bombers<br>
+        9000 Fighters<br>
+        900 Transports<br>
+        2700 Cruisers<br>
+        900 Carriers<br>
+        54000 Droids<br>
+        30000 Psychics<br>
+        30000 Agents<br>
+        20 Exploration ships<br>
+        Disband units</td>
+      <td vAlign="top" align="middle" width="50%">
+        <p align="center"><b>Fleets orders</b><br>
+        </form>
+        <form action="http://217.8.141.79:9990/fleets" method="post">
+          <table cellSpacing="8">
+            <tbody>
+              <tr>
+                <td align="middle">Order after an attack</td>
+              </tr>
+              <tr>
+                <td align="middle"><select name="attack">
+                    <option value="0">Station fleet on planet
+                    <option value="1" selected>Wait in system
+                    <option value="2">Recall to main fleet</option>
+                  </select></td>
+              </tr>
+              <tr>
+                <td align="middle">Approximations of enemy forces to flee
+                  battles
+              <tr>
+                <td align="middle">
+                  <table>
+                    <tbody>
+                      <tr>
+                        <td noWrap align="right">Long-range attack</td>
+                        <td><input size="4" value="200" name="f0"> %</td>
+                      </tr>
+                      <tr>
+                        <td noWrap align="right">Air vs air</td>
+                        <td><input size="4" value="200" name="f1"> %</td>
+                      </tr>
+                      <tr>
+                        <td noWrap align="right">Ground vs air</td>
+                        <td><input size="4" value="250" name="f2"> %</td>
+                      </tr>
+                      <tr>
+                        <td noWrap align="right">Ground vs ground</td>
+                        <td><input size="4" value="250" name="f3"> %</td>
+                      </tr>
+                    </tbody>
+                  </table>
+              <tr>
+                <td align="middle"><input type="button" value="Change"></td>
+              </tr>
+            </tbody>
+          </table>
+        </form>
+      </td>
+    </tr>
+  </tbody>
+</table>
+<p align="center">
+<b>Traveling fleets</b><br>
+<br>
+<div align="center">
+  <center>
+  <table>
+    <tr>
+      <td width="18%">Units</td>
+      <td width="18%">Order</td>
+      <td width="18%">Status</td>
+      <td width="18%">Current position</td>
+      <td width="18%">Changes</td>
+    </tr>
+    <tr>
+      <td>100 Bombers<br>
+        1000 Fighters<br>
+        100 Transports<br>
+        300 Cruisers<br>
+        100 Carriers<br>
+        6000 Droids<br>
+      </td>
+      <td>Attack the planet <a href="planet_e.htm"> 1,3:4</a></td>
+      <td><a href="combat.htm">Ready to attack</a></td>
+      <td><a href="systems/system.htm">1,3</a></td>
+      <td><a href="fleet_detail.htm">Details</a></td>
+    </tr>
+  </table>
+  </center>
+</div>
+<p align="center"><b>Dispatch a new fleet</b><br>
+<br>
+<form action="http://217.8.141.79:9990/fleetsend" method="post">
+  <p align="center"><select name="order">
+    <option value="3" selected>Attack the planet
+    <option value="1">Station on planet
+    <option value="2">Move to system</option>
+  </select>
+  <div align="center">
+    <center>
+    <table cellSpacing="8">
+      <tbody>
+        <tr>
+          <td align="right">
+            <p align="center">1000 Bombers</p>
+          </td>
+          <td>
+            <p align="center"><input size="12" name="u0"></p>
+          </td>
+        </tr>
+        <tr>
+          <td align="right">
+            <p align="center">20000 Fighters</p>
+          </td>
+          <td>
+            <p align="center"><input size="12" name="u1"></p>
+          </td>
+        </tr>
+        <tr>
+          <td align="right">
+            <p align="center">500 Transports</p>
+          </td>
+          <td>
+            <p align="center"><input size="12" name="u2"></p>
+          </td>
+        </tr>
+        <tr>
+          <td align="right">
+            <p align="center">10000 Cruisers</p>
+          </td>
+          <td>
+            <p align="center"><input size="12" name="u3"></p>
+          </td>
+        </tr>
+        <tr>
+          <td align="right">
+            <p align="center">500 Carriers</p>
+          </td>
+          <td>
+            <p align="center"><input size="12" name="u4"></p>
+          </td>
+        </tr>
+        <tr>
+          <td align="right">
+            <p align="center">30000 Droids</p>
+          </td>
+          <td>
+            <p align="center"><input size="12" name="u6"></p>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+    </center>
+  </div>
+  <p align="center">X:<input size="4" name="X"> Y:<input size="4" name="Y">
+  Planet:<input size="4" name="Z"><br>
+  <br>
+  <input type="button" value="Send">
+</form>
+      </td>
+      <td width="7" background="pics/i43.jpg">&nbsp;</td>
+    </tr>
+  </tbody>
+</table>
+<table cellSpacing="0" cellPadding="0" width="90%" align="center" border="0">
+  <tbody>
+    <tr>
+      <td width="62"><img src="pics/i45.jpg" width="62" height="12"></td>
+      <td width="100%" background="pics/i47.jpg"><img src="i47.jpg" width="1" height="12"></td>
+      <td width="62"><img src="pics/i49.jpg" width="62" height="12"></td>
+    </tr>
+  </tbody>
+</table>
+
+<p align="center">&nbsp;</p>
+<p align="left">&nbsp;</p>
+
+</body>
+
+
+<!-- Mirrored from starfury.ectroverse.net/Guide/fleet.htm by HTTrack Website Copier/3.x [XR&CO'2004], Sat, 29 May 2004 20:22:52 GMT -->
+</html>

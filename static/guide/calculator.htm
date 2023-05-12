@@ -1,0 +1,839 @@
+<html>
+
+
+<!-- Mirrored from starfury.ectroverse.net/Guide/calculator.htm by HTTrack Website Copier/3.x [XR&CO'2004], Sat, 29 May 2004 20:22:52 GMT -->
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=windows-1252">
+<meta name="GENERATOR" content="Microsoft FrontPage 4.0">
+<meta name="ProgId" content="FrontPage.Editor.Document">
+<title>EctroVerse Guide</title>
+</head>
+
+<body background="pics/mbg.gif" text="#CCFFFF" link="#00FF00" vlink="#00FF00" alink="#00FF00">
+
+<table cellSpacing="0" cellPadding="0" width="90%" align="center" background="pics/i27.jpg" border="0">
+  <tbody>
+    <tr>
+      <td width="10%"><img src="pics/i25.jpg" width="22" height="24"></td>
+      <td noWrap align="middle" width="80%">&nbsp;</td>
+      <td align="right" width="10%"><img src="pics/i30.jpg" width="62" height="24"></td>
+    </tr>
+  </tbody>
+</table>
+<table cellSpacing="0" cellPadding="0" width="90%" align="center" border="0">
+  <tbody>
+    <tr>
+      <td width="7" background="pics/i38.jpg">&nbsp;</td>
+      <td align="middle" bgColor="#0c1921">
+        <p align="center"><font size="5"><b>Calculators</b></font></p>
+        <p align="center">For formulas go <a href="nerd.htm">here</a></p>
+        <p align="left">This is the section where you can find any calculator
+        that is used anywhere in the guide:</p>
+        <p align="left"><font size="4"><b>1. Fleet Readiness</b></font></p>
+        <form name="frLoss">
+
+<p align="left"><font size="5">Readiness Loss Calculator</font>
+<p align="left"><input type="text" name="myPl" size="10" reset>Number
+          of my planets<br>
+          <input type="text" name="hisPl" size="10" reset>Number of his planets<br>
+          <input type="text" name="emPl" size="10" reset># of planets of my
+Empire<br>
+          <input type="text" name="em2Pl" size="10" reset># of planets of his
+Empire<br>
+          <input type="submit" value="Calculate" onclick="
+var frOne=document.frLoss.myPl.value; 
+var frTwo=document.frLoss.hisPl.value; 
+var frThree=document.frLoss.emPl.value;
+var frFour=document.frLoss.em2Pl.value;
+var P1=(frOne-(-1));
+var P2=(frTwo-(-1));
+var E1=(frThree-(-1));
+var E2=(frFour-(-1));
+
+
+var IF1=(P1/P2);
+var IF2=Math.pow(IF1,1.2);
+var IF4=0.5*(IF2-(-1));
+if (IF4 < 0.5)
+{
+ IF4=0.5;
+}
+IF5=IF4*12.5/3;
+
+var nor1=(P1/P2);
+var nor2=Math.pow(nor1,1.8);
+var nor3=(E1/E2);
+var nor4=Math.pow(nor3,1.2);
+var nor5=0.5*(nor2+nor4);
+if (nor5 < 0.5)
+{
+ nor5=0.5;
+}
+nor6=nor5*12.5;
+war=nor6/3;
+
+
+if (nor6 > 300)
+{
+ nor6=300;
+}
+
+if (war > 300)
+{
+ war=300;
+}
+
+if (IF5 > 50)
+{
+ IF5=50;
+}
+document.frLoss.Nor.value=Math.round(nor6);
+document.frLoss.War.value=Math.round(war);
+document.frLoss.IF.value=Math.round(IF5);
+
+return false" /><br>
+&nbsp;&nbsp;&nbsp;&nbsp;
+          Normal attack:&nbsp; <input name="Nor" size="5" style="background-color: #0C1921; color: #FF0000; font-weight: bold; border-style: solid; border-color: #0C1921" />&nbsp;&nbsp;&nbsp;<br>
+          Attack
+          during war:&nbsp; <input name="War" size="5" style="background-color: #0C1921; color: #FF0000; font-weight: bold; border-style: solid; border-color: #0C1921" />&nbsp;&nbsp;&nbsp;&nbsp;<br>
+Intra-family attack:&nbsp;&nbsp;<input name="IF" size="5" style="background-color: #0C1921; color: #FF0000; font-weight: bold; border-style: solid; border-color: #0C1921" />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+
+</p>
+
+        </form>
+        <p align="left">&nbsp;</p>
+        <p align="center"><font color="#66CCFF" size="4">---------------------------------------------------------------------------------------------------------------------</font></p>
+        <p align="left"><b><font size="4">2.Psychic/Agent Readiness:</font></b></p>
+        <p align="left">&nbsp;</p>
+        <form name="arLoss">
+          <p align="left"><input type="text" name="myPl" size="10"> Number of my
+          planets<br>
+          <input type="text" name="hisPl" size="10"> Number of his planets<br>
+          <input type="text" name="emPl" size="10"> # of planets of my Empire<br>
+          <input type="text" name="em2Pl" size="10"> # of planets of his Empire<br>
+          <input type="text" name="myRes" size="5"> my Op/Welfare research (Op
+          research for Agent Operations, Welfare for Psychic Spells and Ghost
+          Ship Incantations)<br>
+          <br>
+          <select size="1" name="D1">
+            <option>***Operations***</option>
+            <option value="Spy Target">Spy Target</option>
+            <option value="Observe Planet">Observe Planet</option>
+            <option value="Network Virus">Network Virus</option>
+            <option value="Infiltration">Infiltration</option>
+            <option value="Bio Infection">Bio Infection</option>
+            <option value="Energy Transfer">Energy Transfer</option>
+            <option value="Military Sabotage">Military Sabotage</option>
+            <option value="Nuke Planet">Nuke Planet</option>
+            <option value="High Infiltration">High Infiltration</option>
+            <option>***Spells***</option>
+            <option value="Irradiate ectrolium">Irradiate ectrolium</option>
+            <option value="Dark Web">Dark Web</option>
+            <option value="Incandescence">Incandescence</option>
+            <option value="Black Mist">Black Mist</option>
+            <option value="War Illusion">War Illusion</option>
+            <option value="Phantoms">Phantoms</option>
+            <option>***Incantations***</option>
+            <option value="Sense Artifact">Sense Artifact</option>
+            <option value="Survey System">Survey System</option>
+            <option value="Planetary Shielding">Planetary Shielding</option>
+            <option value="Portal Force Field">Portal Force Field</option>
+            <option value="Vortex Portal">Vortex Portal</option>
+            <option value="Mind Control">Mind Control</option>
+            <option value="Energy Surge">Energy Surge</option>
+          </select>Chose Operation/Spell/Incantation<br>
+          <input type="submit" value="Calculate" onclick="  
+
+var arOne=document.arLoss.myPl.value;  
+var arTwo=document.arLoss.hisPl.value;  
+var arThree=document.arLoss.emPl.value;  
+var arFour=document.arLoss.em2Pl.value;
+var arRes=document.arLoss.myRes.value;  
+  
+  
+if (document.arLoss.D1.value=='Spy Target')  
+{  
+  var req=0;  
+  var red=12;  
+}  
+if (document.arLoss.D1.value=='Observe Planet')  
+{  
+  var req=0;  
+  var red=5;  
+}  
+if (document.arLoss.D1.value=='Network Virus')  
+{  
+  var req=20;  
+  var red=20;  
+}  
+if (document.arLoss.D1.value=='Infiltration')  
+{  
+  var req=40;  
+  var red=18;  
+}  
+if (document.arLoss.D1.value=='Bio Infection')  
+{  
+  var req=60;  
+  var red=25;  
+}  
+if (document.arLoss.D1.value=='Energy Transfer')  
+{  
+  var req=80;  
+  var red=22;  
+}  
+if (document.arLoss.D1.value=='Military Sabotage')  
+{  
+  var req=100;  
+  var red=30;  
+}  
+if (document.arLoss.D1.value=='Nuke Planet')  
+{  
+  var req=120;  
+  var red=20;  
+}  
+if (document.arLoss.D1.value=='High Infiltration')  
+{  
+  var req=160;  
+  var red=40;  
+}  
+if (document.arLoss.D1.value=='Irradiate ectrolium')  
+{  
+  var req=0;  
+  var red=12;  
+}  
+if (document.arLoss.D1.value=='Dark Web')  
+{  
+  var req=0;  
+  var red=18;  
+}  
+if (document.arLoss.D1.value=='Incandescence')  
+{  
+  var req=0;  
+  var red=30;  
+}  
+if (document.arLoss.D1.value=='Black Mist')  
+{  
+  var req=50;  
+  var red=24;  
+}  
+if (document.arLoss.D1.value=='War Illusion')  
+{  
+  var req=70;  
+  var red=30;  
+}  
+if (document.arLoss.D1.value=='Phantoms')  
+{  
+  var req=110;  
+  var red=40;  
+}  
+
+if (document.arLoss.D1.value=='Sense Artifact')  
+{  
+  var req=20;  
+  var red=60;  
+}  
+if (document.arLoss.D1.value=='Survey System')  
+{  
+  var req=40;  
+  var red=20;  
+}  
+if (document.arLoss.D1.value=='Planetary Shielding')  
+{  
+  var req=60;  
+  var red=40;  
+}  
+if (document.arLoss.D1.value=='Portal Force Field')  
+{  
+  var req=80;  
+  var red=30;  
+}  
+if (document.arLoss.D1.value=='Vortex Portal')  
+{  
+  var req=100;  
+  var red=60;  
+}  
+if (document.arLoss.D1.value=='Mind Control')  
+{  
+  var req=120;  
+  var red=40;  
+}  
+if (document.arLoss.D1.value=='Energy Surge')  
+{  
+  var req=140;  
+  var red=80;  
+}  
+
+
+var penalty=req-arRes;  
+if (penalty &lt; 0)  
+{  
+ var arPenalty=1;  
+}  
+else  
+{  
+ arPenalty=Math.pow(penalty,1.2);  
+}  
+
+
+var Pl1=(arOne-(-1));
+var Pl2=(arTwo-(-1));
+var em3=(arThree-(-1));
+var em4=(arFour-(-1));
+
+var pa=Pl1/Pl2;
+var pb=em3/em4;
+var p1=Math.pow(pa,1.8);
+var p2=Math.pow(pb,1.2);
+var p3=(0.5*(p1-(-p2)));
+
+if (p3 &lt; 0.75)
+{
+ p3=0.75;
+}
+
+p4=(((0.01*arPenalty)-(-1))*red*p3);
+
+p5=p4/3;
+
+
+
+if (p4 &gt; 300)
+{
+ p4=300;
+}
+
+if (p5 &gt; 300)
+{
+ p5=300;
+}
+  
+if (arPenalty &gt;=150)  
+{  
+ alert('Cannot perform Operation');  
+ document.arLoss.Nor.value=0;  
+ document.arLoss.IF.value=0;    
+}  
+else  
+{  
+ document.arLoss.Nor.value=p4;  
+ document.arLoss.IF.value=p5;  
+}  
+return false" /><br>
+          &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Normal op/spell:&nbsp; <input name="Nor" size="5" style="background-color: #0C1921; color: #FF0000; font-weight: bold; border-style: solid; border-color: #0C1921" />&nbsp;<br>
+          War/Intra-family/Ally&nbsp; <input name="IF" size="5" style="background-color: #0C1921; color: #FF0000; font-weight: bold; border-style: solid; border-color: #0C1921" />
+          </p>
+        </form>
+        <p align="center"><font color="#66CCFF" size="4">---------------------------------------------------------------------------------------------------------------------</font></p>
+        <p align="left"><font size="4" color="#CCFFFF"><b>3. Unit cost</b></font>:</p>
+        <form method="POST" name="Build">
+        <p align="center">Your Construction Research %:<input type="text" name="research" size="7" value="0"></p>
+        <p align="left">&nbsp;</p>
+        <div align="center" style="width: 552; height: 436">
+          <center>
+          <table border="1" width="700" height="361" cellspacing="0" cellpadding="0" bordercolor="#000099">
+            <tr>
+              <td width="15%" height="19">&nbsp;</td>
+              <td width="15%" align="center" height="19">&nbsp;</td>
+              <td width="70%" colspan="4" height="19">
+                <p align="center"><font size="4"><b>Cost</b></font></td>
+            </tr>
+            <tr>
+              <td width="15%" align="right" height="19">
+                <p align="center"><b><font size="4">Name</font></b></p>
+              </td>
+              <td width="15%" align="center" height="19"><b><font size="4">Number
+                to build</font></b></td>
+              <td width="17.5%" align="center" height="19">Energy</td>
+              <td width="17.5%" align="center" height="19">Mineral</td>
+              <td width="17.5%" align="center" height="19">Crystal</td>
+              <td width="17.5%" align="center" height="19">Ectrolium</td>
+            </tr>
+            <tr>
+              <td width="15%" align="right" height="15">Bomber</td>
+              <td width="15%" align="center" height="15"><input type="text" name="bom" size="11" value="0"></td>
+              <td width="17.5%" align="left" height="15"><input type="text" name="bomen" size="11" style="color: #FF0000; font-weight: bold; background-color: #0C1921; border-style: solid; border-color: #0C1921"></td>
+              <td width="17.5%" align="left" height="15"><input type="text" name="bommin" size="11" style="color: #FF0000; font-weight: bold; background-color: #0C1921; border-style: solid; border-color: #0C1921"></td>
+              <td width="17.5%" align="left" height="15" bgcolor="#CCFFFF">
+                <p align="center">&nbsp;</p>
+              </td>
+              <td width="17.5%" align="left" height="15"><input type="text" name="bomect" size="11" style="color: #FF0000; font-weight: bold; background-color: #0C1921; border-style: solid; border-color: #0C1921"></td>
+            </tr>
+            <tr>
+              <td width="15%" align="right" height="23">Fighter</td>
+              <td width="15%" align="center" height="23"><input type="text" name="fig" size="11" value="0"></td>
+              <td width="17.5%" align="left" height="23"><input type="text" name="figen" size="11" style="color: #FF0000; font-weight: bold; background-color: #0C1921; border-style: solid; border-color: #0C1921"></td>
+              <td width="17.5%" align="left" height="23"><input type="text" name="figmin" size="11" style="color: #FF0000; font-weight: bold; background-color: #0C1921; border-style: solid; border-color: #0C1921"></td>
+              <td width="17.5%" align="left" height="23" bgcolor="#CCFFFF">
+                <p align="center">&nbsp;</p>
+              </td>
+              <td width="17.5%" align="left" height="23"><input type="text" name="figect" size="11" style="color: #FF0000; font-weight: bold; background-color: #0C1921; border-style: solid; border-color: #0C1921"></td>
+            </tr>
+            <tr>
+              <td width="15%" align="right" height="23">Transport</td>
+              <td width="15%" align="center" height="23"><input type="text" name="trn" size="11" value="0"></td>
+              <td width="17.5%" align="left" height="23"><input type="text" name="trnen" size="11" style="color: #FF0000; font-weight: bold; background-color: #0C1921; border-style: solid; border-color: #0C1921"></td>
+              <td width="17.5%" align="left" height="23"><input type="text" name="trnmin" size="11" style="color: #FF0000; font-weight: bold; background-color: #0C1921; border-style: solid; border-color: #0C1921"></td>
+              <td width="17.5%" align="left" height="23"><font color="#FF0000"><b><input type="text" name="trncry" size="11" style="color: #FF0000; font-weight: bold; background-color: #0C1921; border-style: solid; border-color: #0C1921"></b></font></td>
+              <td width="17.5%" align="left" height="23"><input type="text" name="trnect" size="11" style="color: #FF0000; font-weight: bold; background-color: #0C1921; border-style: solid; border-color: #0C1921"></td>
+            </tr>
+            <tr>
+              <td width="15%" align="right" height="23">Cruiser</td>
+              <td width="15%" align="center" height="23"><input type="text" name="cru" size="11" value="0"></td>
+              <td width="17.5%" align="left" height="23"><input type="text" name="cruen" size="11" style="color: #FF0000; font-weight: bold; background-color: #0C1921; border-style: solid; border-color: #0C1921"></td>
+              <td width="17.5%" align="left" height="23"><input type="text" name="crumin" size="11" style="color: #FF0000; font-weight: bold; background-color: #0C1921; border-style: solid; border-color: #0C1921"></td>
+              <td width="17.5%" align="left" height="23" bgcolor="#CCFFFF">
+                <p align="center">&nbsp;</p>
+              </td>
+              <td width="17.5%" align="left" height="23"><input type="text" name="cruect" size="11" style="color: #FF0000; font-weight: bold; background-color: #0C1921; border-style: solid; border-color: #0C1921"></td>
+            </tr>
+            <tr>
+              <td width="15%" align="right" height="23">Carrier</td>
+              <td width="15%" align="center" height="23"><input type="text" name="car" size="11" value="0"></td>
+              <td width="17.5%" align="left" height="23"><input type="text" name="caren" size="11" style="color: #FF0000; font-weight: bold; background-color: #0C1921; border-style: solid; border-color: #0C1921"></td>
+              <td width="17.5%" align="left" height="23"><input type="text" name="carmin" size="11" style="color: #FF0000; font-weight: bold; background-color: #0C1921; border-style: solid; border-color: #0C1921"></td>
+              <td width="17.5%" align="left" height="23"><font color="#FF0000"><b><input type="text" name="carcry" size="11" style="color: #FF0000; font-weight: bold; background-color: #0C1921; border-style: solid; border-color: #0C1921"></b></font></td>
+              <td width="17.5%" align="left" height="23"><input type="text" name="carect" size="11" style="color: #FF0000; font-weight: bold; background-color: #0C1921; border-style: solid; border-color: #0C1921"></td>
+            </tr>
+            <tr>
+              <td width="15%" align="right" height="23">Soldier</td>
+              <td width="15%" align="center" height="23"><input type="text" name="sol" size="11" value="0"></td>
+              <td width="17.5%" align="left" height="23"><input type="text" name="solen" size="11" style="color: #FF0000; font-weight: bold; background-color: #0C1921; border-style: solid; border-color: #0C1921"></td>
+              <td width="17.5%" align="left" height="23" bgcolor="#CCFFFF">
+                <p align="center">&nbsp;</p>
+              </td>
+              <td width="17.5%" align="left" height="23" bgcolor="#CCFFFF">
+                <p align="center">&nbsp;</td>
+              <td width="17.5%" align="left" height="23"><input type="text" name="solect" size="11" style="color: #FF0000; font-weight: bold; background-color: #0C1921; border-style: solid; border-color: #0C1921"></td>
+            </tr>
+            <tr>
+              <td width="15%" align="right" height="23">Droid</td>
+              <td width="15%" align="center" height="23"><input type="text" name="drd" size="11" value="0"></td>
+              <td width="17.5%" align="left" height="23"><input type="text" name="drden" size="11" style="color: #FF0000; font-weight: bold; background-color: #0C1921; border-style: solid; border-color: #0C1921"></td>
+              <td width="17.5%" align="left" height="23"><input type="text" name="drdmin" size="11" style="color: #FF0000; font-weight: bold; background-color: #0C1921; border-style: solid; border-color: #0C1921"></td>
+              <td width="17.5%" align="left" height="23" bgcolor="#CCFFFF">
+                <p align="center">&nbsp;</p>
+              </td>
+              <td width="17.5%" align="left" height="23"><input type="text" name="drdect" size="11" style="color: #FF0000; font-weight: bold; background-color: #0C1921; border-style: solid; border-color: #0C1921"></td>
+            </tr>
+            <tr>
+              <td width="15%" align="right" height="23">Goliath</td>
+              <td width="15%" align="center" height="23"><input type="text" name="gol" size="11" value="0"></td>
+              <td width="17.5%" align="left" height="23"><input type="text" name="golen" size="11" style="color: #FF0000; font-weight: bold; background-color: #0C1921; border-style: solid; border-color: #0C1921"></td>
+              <td width="17.5%" align="left" height="23"><input type="text" name="golmin" size="11" style="color: #FF0000; font-weight: bold; background-color: #0C1921; border-style: solid; border-color: #0C1921"></td>
+              <td width="17.5%" align="left" height="23"><font color="#FF0000"><b><input type="text" name="golcry" size="11" style="color: #FF0000; font-weight: bold; background-color: #0C1921; border-style: solid; border-color: #0C1921"></b></font></td>
+              <td width="17.5%" align="left" height="23"><input type="text" name="golect" size="11" style="color: #FF0000; font-weight: bold; background-color: #0C1921; border-style: solid; border-color: #0C1921"></td>
+            </tr>
+            <tr>
+              <td width="15%" align="right" height="23">Psychic</td>
+              <td width="15%" align="center" height="23"><input type="text" name="psy" size="11" value="0"></td>
+              <td width="17.5%" align="left" height="23"><input type="text" name="psyen" size="11" style="color: #FF0000; font-weight: bold; background-color: #0C1921; border-style: solid; border-color: #0C1921"></td>
+              <td width="17.5%" align="left" height="23" bgcolor="#CCFFFF">
+                <p align="center">&nbsp;</p>
+              </td>
+              <td width="17.5%" align="left" height="23"><font color="#FF0000"><b><input type="text" name="psycry" size="11" style="color: #FF0000; font-weight: bold; background-color: #0C1921; border-style: solid; border-color: #0C1921"></b></font></td>
+              <td width="17.5%" align="left" height="23" bgcolor="#CCFFFF">
+                <p align="center">&nbsp;</p>
+              </td>
+            </tr>
+            <tr>
+              <td width="15%" align="right" height="23">Agent</td>
+              <td width="15%" align="center" height="23"><input type="text" name="agn" size="11" value="0"></td>
+              <td width="17.5%" align="left" height="23"><input type="text" name="agnen" size="11" style="color: #FF0000; font-weight: bold; background-color: #0C1921; border-style: solid; border-color: #0C1921"></td>
+              <td width="17.5%" align="left" height="23" bgcolor="#CCFFFF">
+                <p align="center">&nbsp;</p>
+              </td>
+              <td width="17.5%" align="left" height="23" bgcolor="#CCFFFF">
+                <p align="center">&nbsp;</p>
+              </td>
+              <td width="17.5%" align="left" height="23"><input type="text" name="agnect" size="11" style="color: #FF0000; font-weight: bold; background-color: #0C1921; border-style: solid; border-color: #0C1921"></td>
+            </tr>
+            <tr>
+              <td width="15%" align="right" height="23">Ghost Ship</td>
+              <td width="15%" align="center" height="23"><input type="text" name="gos" size="11" value="0"></td>
+              <td width="17.5%" align="left" height="23"><input type="text" name="gosen" size="11" style="color: #FF0000; font-weight: bold; background-color: #0C1921; border-style: solid; border-color: #0C1921"></td>
+              <td width="17.5%" align="left" height="23"><input type="text" name="gosmin" size="11" style="color: #FF0000; font-weight: bold; background-color: #0C1921; border-style: solid; border-color: #0C1921"></td>
+              <td width="17.5%" align="left" height="23"><font color="#FF0000"><b><input type="text" name="goscry" size="11" style="color: #FF0000; font-weight: bold; background-color: #0C1921; border-style: solid; border-color: #0C1921"></b></font></td>
+              <td width="17.5%" align="left" height="23"><input type="text" name="gosect" size="11" style="color: #FF0000; font-weight: bold; background-color: #0C1921; border-style: solid; border-color: #0C1921"></td>
+            </tr>
+            <tr>
+              <td width="15%" align="right" height="23">Exploration ship</td>
+              <td width="15%" align="center" height="23"><input type="text" name="exp" size="11" value="0"></td>
+              <td width="17.5%" align="left" height="23"><input type="text" name="expen" size="11" style="color: #FF0000; font-weight: bold; background-color: #0C1921; border-style: solid; border-color: #0C1921"></td>
+              <td width="17.5%" align="left" height="23"><input type="text" name="expmin" size="11" style="color: #FF0000; font-weight: bold; background-color: #0C1921; border-style: solid; border-color: #0C1921"></td>
+              <td width="17.5%" align="left" height="23" bordercolor="#000000" bgcolor="#CCFFFF">
+                <p align="center">&nbsp;</td>
+              <td width="17.5%" align="left" height="23"><input type="text" name="expect" size="11" style="color: #FF0000; font-weight: bold; background-color: #0C1921; border-style: solid; border-color: #0C1921"></td>
+            </tr>
+            <tr>
+              <td width="15%" align="right" height="23"><b>Total:</b></td>
+              <td width="15%" align="center" height="23"><input type="text" name="total" size="11" style="color: #FF0000; font-weight: bold; background-color: #0C1921; font-size: 12pt; border-style: solid; border-color: #0C1921"></td>
+              <td width="17.5%" align="left" height="23"><input type="text" name="totalen" size="11" style="color: #FF0000; font-weight: bold; background-color: #0C1921; font-size: 12pt; border-style: solid; border-color: #0C1921"></td>
+              <td width="17.5%" align="left" height="23"><input type="text" name="totalmin" size="11" style="color: #FF0000; font-weight: bold; background-color: #0C1921; font-size: 12pt; border-style: solid; border-color: #0C1921"></td>
+              <td width="17.5%" align="left" height="23"><input type="text" name="totalcry" size="11" style="color: #FF0000; font-weight: bold; background-color: #0C1921; font-size: 12pt; border-style: solid; border-color: #0C1921"></td>
+              <td width="17.5%" align="left" height="23"><input type="text" name="totalect" size="11" style="color: #FF0000; font-weight: bold; background-color: #0C1921; font-size: 12pt; border-style: solid; border-color: #0C1921"></td>
+            </tr>
+          </table>
+          </center>
+        </div>
+        <div align="center">
+          <center>
+          <table border="1" width="75%" bordercolor="#000099" cellspacing="0" cellpadding="0">
+            <tr>
+              <td width="25%">
+                <p align="right"><b>Total Networth:</b></td>
+              <td width="25%"><input type="text" name="Networth" size="11" style="color: #FF0000; font-weight: bold; background-color: #0C1921; font-size: 12pt; border-style: solid; border-color: #0C1921"></td>
+              <td width="25%">
+                <p align="right"><b>Total upkeep:</b></td>
+              <td width="25%"><input type="text" name="Upkeep" size="11" style="color: #FF0000; font-weight: bold; background-color: #0C1921; font-size: 12pt; border-style: solid; border-color: #0C1921"></td>
+            </tr>
+          </table>
+          </center>
+        </div>
+        <p align="left"><input type="submit" value="Calculate" onclick="
+  
+  var research=document.Build.research.value;
+  var bom=document.Build.bom.value;
+  var fig=document.Build.fig.value;
+  var trn=document.Build.trn.value;
+  var cru=document.Build.cru.value;
+  var car=document.Build.car.value;
+  var sol=document.Build.sol.value;
+  var drd=document.Build.drd.value;
+  var gol=document.Build.gol.value;
+  var agn=document.Build.agn.value;
+  var psy=document.Build.psy.value;
+  var gos=document.Build.gos.value;
+  var exp=document.Build.exp.value;
+  
+  var red;
+  red=100/(100-(-research));
+  
+  var bomen=0;
+  var bommin=0;
+  var bomect=0;
+  if (bom > 0)
+  {
+  bomen=250*bom*red;
+  bommin=15*bom*red;
+  bomect=5*bom*red;
+  document.Build.bomen.value=Math.ceil(bomen);
+  document.Build.bommin.value=Math.ceil(bommin);
+  document.Build.bomect.value=Math.ceil(bomect);
+  }
+  else
+  {
+  document.Build.bomen.value=document.Build.bommin.value=document.Build.bomect.value='', bom=0;
+  }
+  
+  var figen=0;
+  var figmin=0;
+  var figect=0;
+  if (fig > 0)
+  {
+  figen=150*fig*red;
+  figmin=10*fig*red;
+  figect=3*fig*red;
+  document.Build.figen.value=Math.ceil(figen);
+  document.Build.figmin.value=Math.ceil(figmin);
+  document.Build.figect.value=Math.ceil(figect);
+  }
+  else
+  {
+  document.Build.figen.value=document.Build.figmin.value=document.Build.figect.value='', fig=0;
+  }
+  
+  var trnen=0;
+  var trnmin=0;
+  var trncry=0;
+  var trnect=0;
+  if (trn > 0)
+  {
+  trnen=600*trn*red;
+  trnmin=35*trn*red;
+  trncry=10*trn*red;
+  trnect=10*trn*red;
+  document.Build.trnen.value=Math.ceil(trnen);
+  document.Build.trnmin.value=Math.ceil(trnmin);
+  document.Build.trncry.value=Math.ceil(trncry);
+  document.Build.trnect.value=Math.ceil(trnect);
+  }
+  else
+  document.Build.trnen.value=document.Build.trnmin.value=document.Build.trncry.value=document.Build.trnect.value='', trn=0;
+  
+  var cruen=0;
+  var crumin=0;
+  var cruect=0;
+  if (cru > 0)
+  {
+  cruen=1600*cru*red;
+  crumin=95*cru*red;
+  cruect=45*cru*red;
+  document.Build.cruen.value=Math.ceil(cruen);
+  document.Build.crumin.value=Math.ceil(crumin);
+  document.Build.cruect.value=Math.ceil(cruect);
+  }
+  else
+  document.Build.cruen.value=document.Build.crumin.value=document.Build.cruect.value='', cru=0;
+  
+  var caren=0;
+  var carmin=0;
+  var carcry=0;
+  var carect=0;
+  if (car > 0)
+  {
+  caren=2000*car*red;
+  carmin=160*car*red;
+  carcry=15*car*red;
+  carect=20*car*red;
+  document.Build.caren.value=Math.ceil(caren);
+  document.Build.carmin.value=Math.ceil(carmin);
+  document.Build.carcry.value=Math.ceil(carcry);
+  document.Build.carect.value=Math.ceil(carect);
+  }
+  else
+  document.Build.caren.value=document.Build.carmin.value=document.Build.carcry.value=document.Build.carect.value='', car=0;
+    
+  var solen=0;
+  var solect=0;
+  if (sol > 0)
+  {
+  solen=100*sol*red;
+  solect=sol;
+  document.Build.solen.value=Math.ceil(solen);
+  document.Build.solect.value=Math.ceil(solect);
+  }
+  else
+  document.Build.solen.value=document.Build.solect.value='', sol=0;
+  
+  var drden=0;
+  var drdmin=0;
+  var drdect=0;
+  if (drd > 0)
+  {
+  drden=50*drd*red;
+  drdmin=5*drd*red;
+  drdect=drd;
+  document.Build.drden.value=Math.ceil(drden);
+  document.Build.drdmin.value=Math.ceil(drdmin);
+  document.Build.drdect.value=Math.ceil(drdect);
+  }
+  else
+  document.Build.drden.value=document.Build.drdmin.value=document.Build.drdect.value='', drd=0;
+  
+  var golen=0;
+  var golmin=0;
+  var golcry=0;
+  var golect=0;
+  if (gol > 0)
+  {
+  golen=350*gol*red;
+  golmin=20*gol*red;
+  golcry=8*gol*red;
+  golect=10*gol*red;
+  document.Build.golen.value=Math.ceil(golen);
+  document.Build.golmin.value=Math.ceil(golmin);
+  document.Build.golcry.value=Math.ceil(golcry);
+  document.Build.golect.value=Math.ceil(golect);
+  }
+  else
+  document.Build.golen.value=document.Build.golmin.value=document.Build.golcry.value=document.Build.golect.value='', gol=0;
+  
+  var psyen=0;
+  var psycry=0;
+  if (psy > 0)
+  {
+  psyen=150*psy*red;
+  psycry=10*psy*red;
+  document.Build.psyen.value=Math.ceil(psyen);
+  document.Build.psycry.value=Math.ceil(psycry);
+  }
+  else
+  document.Build.psyen.value=document.Build.psycry.value='', psy=0;
+
+  
+  var agnen=0;
+  var agnect=0;
+  if (agn > 0)
+  {
+  agnen=150*agn*red;
+  agnect=10*agn*red;
+  document.Build.agnen.value=Math.ceil(agnen);
+  document.Build.agnect.value=Math.ceil(agnect);
+  }
+  else
+  document.Build.agnen.value=document.Build.agnect.value='', agn=0;
+  
+  var gosen=0;
+  var gosmin=0;
+  var goscry=0;
+  var gosect=0;
+  if (gos > 0)
+  {
+  gosen=200*gos*red;
+  gosmin=8*gos*red;
+  goscry=60*gos*red;
+  gosect=5*gos*red;
+  document.Build.gosen.value=Math.ceil(gosen);
+  document.Build.gosmin.value=Math.ceil(gosmin);
+  document.Build.goscry.value=Math.ceil(goscry);
+  document.Build.gosect.value=Math.ceil(gosect);
+  }
+  else
+  document.Build.gosen.value=document.Build.gosmin.value=document.Build.goscry.value=document.Build.gosect.value='', gos=0;
+
+  var expen=0;
+  var expmin=0;
+  var expect=0;
+  if (exp > 0)
+  {
+  expen=5000*exp*red;
+  expmin=50*exp*red;
+  expect=50*exp*red;
+  document.Build.expen.value=Math.ceil(expen);
+  document.Build.expmin.value=Math.ceil(expmin);
+  document.Build.expect.value=Math.ceil(expect);
+  }
+  else
+  document.Build.expen.value=document.Build.expmin.value=document.Build.expect.value='', exp=0;
+  
+  var total;
+  var totalen;
+  var totalmin;
+  var totalcry;
+  var totalect;
+  
+  total=bom-(-fig)-(-trn)-(-cru)-(-car)-(-sol)-(-drd)-(-gol)-(-psy)-(-agn)-(-gos)-(-exp);
+  
+  totalen=Math.ceil(bomen-(-figen)-(-trnen)-(-cruen)-(-caren)-(-solen)-(-drden)-(-golen)-(-psyen)-(-agnen)-(-gosen)-(-expen));
+  
+  totalmin=Math.ceil(bommin-(-figmin)-(-trnmin)-(-crumin)-(-carmin)-(-drdmin)-(-golmin)-(-gosmin)-(-expmin));
+  
+  totalcry=Math.ceil(trncry-(-carcry)-(-golcry)-(-goscry)-(-psycry));
+  
+  totalect=Math.ceil(bomect-(-figect)-(-trnect)-(-cruect)-(-carect)-(-solect)-(-drdect)-(-golect)-(-agnect)-(-gosect)-(-expect));
+  
+  document.Build.total.value=total;
+  document.Build.totalen.value=totalen;
+  document.Build.totalmin.value=totalmin;
+  document.Build.totalcry.value=totalcry;
+  document.Build.totalect.value=totalect;
+  
+  var networth;
+  var upkeep;
+  networth=bom*4-(-fig*3)-(-trn*5)-(-cru*12)-(-car*14)-(-sol)-(-drd)-(-gol*3)-(-psy*2)-(-agn*2)-(-gos*6)-(-exp*30);
+  upkeep=bom*2-(-fig*1.6)-(-trn*3.2)-(-cru*12)-(-car*18)-(-sol*0.4)-(-drd*0.6)-(-gol*2.8)-(-psy*0.8)-(-agn*0.8)-(-gos*2.4)-(-exp*60);
+  
+  document.Build.Networth.value=networth;
+  document.Build.Upkeep.value=Math.ceil(upkeep);
+
+
+return false" name="calc" /></p>
+        </form>
+        <p align="left">&nbsp;</p>
+        <p align="center"><font color="#66CCFF" size="4">---------------------------------------------------------------------------------------------------------------------</font></p>
+        <p align="left"><b><font size="4">4. Portal Upkeep Costs</font></b></p>
+        <form name="Upkeep">
+          <p align="left">I have<input type="text" name="Por" size="4">Portals<br>
+          <br>
+          <input type="submit" value="Calculate" onclick="
+var PorNum=document.Upkeep.Por.value;
+var Cost1=PorNum-1;
+var Cost2=Math.pow(Cost1,1.2736);
+var Cost3=Cost2*10000;
+var Cost4=Math.round(Cost3);
+document.Upkeep.Cost.value=Cost4;        
+return false" /><br>
+          Upkeep:<input type="text" name="Cost" size="13" style="background-color: #0C1921; color: #FF0000; font-weight: bold; border-style: solid; border-color: #0C1921" />
+        </form>
+        <p align="center"><font color="#66CCFF" size="4">---------------------------------------------------------------------------------------------------------------------</font></p>
+        <p align="left"><b><font size="4">5. Research Calculators</font></b></p>
+        <p align="left">This will calculate how many weeks you will need to
+        obtain a certain level of research, given the networth and the number of
+        Research centers.
+        </p>
+        <form name="Research">
+          <p align="left"><input size="8" name="nw" reset>Networth<br>
+          <input size="8" name="RP" reset>current number of Research points<br>
+          <input size="5" name="R" reset>% you want to obtain<br>
+          <input size="8" name="RC" reset>Number of research centers<br>
+          <input size="8" name="cap" reset value="200">Your research cap (200%
+          by default, but race bonuses and artifacts may affect that)<br>
+          <br>
+          <input onclick=" 
+var nw=document.Research.nw.value; 
+var RP=document.Research.RP.value; 
+var R=document.Research.R.value; 
+var RC=document.Research.RC.value; 
+var cap=document.Research.cap.value;
+ 
+var need; 
+need=-((10*nw*Math.log(1-R/cap))/Math.log(2.718281828)) 
+ 
+var tick; 
+tick=RC*5; 
+var tick2; 
+tick2=need/tick; 
+ 
+document.Research.Points.value=Math.ceil(need); 
+document.Research.Time.value=Math.ceil(tick2); 
+return false" type="submit" value="Calculate"></p>
+          <p align="left">Research Points needed: <input size="12" name="Points" style="color: #FF0000; font-weight: bold; background-color: #0C1921; border-style: solid; border-color: #0C1921"><br>
+          Time
+          needed:<input size="5" name="Time" style="color: #FF0000; font-weight: bold; background-color: #0C1921; border-style: solid; border-color: #0C1921"></p>
+        </form>
+        <p align="left">
+        <br>
+        This will calculate what % research you will have in a certain amount of
+        time considering that your # of research centers stays the same and the
+        only networth difference is that of the Research points.<br>
+        <form name="Research2">
+          <p align="left"><input type="text" name="nw" size="10" reset>Networth<br>
+          <input type="text" name="RP" size="10" reset>current number of
+          Research points<br>
+          <input type="text" name="RC" size="10" reset>Number of research
+          centers<br>
+          Calculate for <input type="text" name="tick" size="6" reset>weeks<br>
+          <input size="8" name="capa" reset value="200">Your research cap (200%
+          by default, but race bonuses and artifacts may affect that)</p>
+          <p align="left"><br>
+          <input type="submit" value="Calculate" onclick=" 
+   
+var nw=document.Research2.nw.value; 
+var RP=document.Research2.RP.value; 
+var RC=document.Research2.RC.value; 
+var tick=document.Research2.tick.value; 
+var capa=document.Research2.capa.value;
+ 
+var total; 
+total=tick*RC*5-(-RP); 
+ 
+var percent; 
+percent=capa*(1-Math.pow(2.718281828,(-total/(10*(nw-((-RP)/1000)))))); 
+ 
+document.Research2.Total.value=Math.ceil(total); 
+document.Research2.Percent.value=Math.ceil(percent); 
+return false" /></p>
+          <p align="left">&nbsp;You will have:&nbsp;&nbsp; <input size="12" name="Total" style="background-color: #0C1921; color: #FF0000; font-weight: bold; border-style: solid; border-color: #0C1921">
+          research points<br>
+          Your % will be:&nbsp; <input name="Percent" size="5" style="background-color: #0C1921; color: #FF0000; font-weight: bold; border-style: solid; border-color: #0C1921" /></p>
+        </form>
+      </td>
+      <td width="7" background="pics/i43.jpg">&nbsp;</td>
+    </tr>
+  </tbody>
+</table>
+<table cellSpacing="0" cellPadding="0" width="90%" align="center" border="0">
+  <tbody>
+    <tr>
+      <td width="62"><img src="pics/i45.jpg" width="62" height="12"></td>
+      <td width="100%" background="pics/i47.jpg"><img src="i47.jpg" width="1" height="12"></td>
+      <td width="62"><img src="pics/i49.jpg" width="62" height="12"></td>
+    </tr>
+  </tbody>
+</table>
+
+</body>
+
+
+<!-- Mirrored from starfury.ectroverse.net/Guide/calculator.htm by HTTrack Website Copier/3.x [XR&CO'2004], Sat, 29 May 2004 20:22:52 GMT -->
+</html>
