@@ -500,7 +500,7 @@ def map(request):
     scouted_planets = Scouting.objects.filter(user=request.user,  scout__gte=1.0)
     scouted_planets_dict = {}
     for scouted_planet in scouted_planets:
-        scouted_planets_dict[str(scouted_planet.planet.x)+","+str(scouted_planet.planet.y)]=""
+        scouted_planets_dict[str(scouted_planet.planet.x)+","+str(scouted_planet.planet.y)+","+str(scouted_planet.planet.i)]=""
 
     count = 0
     ownercount = 0
@@ -508,6 +508,7 @@ def map(request):
     unexcount = 0
     porcount = 0
     factcount =0
+    scout_color =""
     prevx=""
     prevy=""
     for p in planets:
@@ -515,6 +516,10 @@ def map(request):
         if p.home_planet:
             mapgen[key]["type"]=5
         if p.x != prevx or p.y != prevy:
+            if count==pcount and count!=0:
+                print(str(prevx)+","+str(prevy)+" fully scanned:"+str(pcount))
+                mapgen[prevx*10000+prevy]["color"]=sum_tuple(scout_color,mapgen[prevx*10000+prevy]["color"])
+                
             count = 0
             ownercount = 0
             pcount = 0
@@ -523,6 +528,7 @@ def map(request):
             factcount =0
         prevx=p.x
         prevy=p.y
+        count+=1 
         for setting in settings:
             color = color_code(setting.color_settings)
             if setting.map_setting == "UE" and unexcount == 0:
@@ -546,9 +552,9 @@ def map(request):
                     mapgen[key]["color"]=sum_tuple(color,mapgen[key]["color"])
         
             if setting.map_setting == "SC":
-                if (str(p.x)+","+str(p.y)) in scouted_planets_dict:
+                if (str(p.x)+","+str(p.y)+","+str(p.i)) in scouted_planets_dict:
                    pcount += 1
-                   mapgen[key]["color"]=sum_tuple(color,mapgen[key]["color"])
+                   scout_color=color
 
     for s in systems:
         key = s.x*10000+s.y
