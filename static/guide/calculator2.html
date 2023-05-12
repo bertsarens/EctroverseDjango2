@@ -1,0 +1,98 @@
+<html>
+
+
+<!-- Mirrored from starfury.ectroverse.net/Guide/calculator.htm by HTTrack Website Copier/3.x [XR&CO'2004], Sat, 29 May 2004 20:22:52 GMT -->
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=windows-1252">
+<meta name="GENERATOR" content="Microsoft FrontPage 4.0">
+<meta name="ProgId" content="FrontPage.Editor.Document">
+<title>EctroVerse Guide</title>
+</head>
+
+<body background="pics/mbg.gif" text="#CCFFFF" link="#00FF00" vlink="#00FF00" alink="#00FF00">
+<p align="left"><b><font size="4">5. Research Calculators</font></b></p>
+        <p align="left">This will calculate how many weeks you will need to
+        obtain a certain level of research, given the networth and the number of
+        Research centers.
+        </p>
+        <form name="Research">
+          <p align="left"><input size="8" name="nw" reset>Networth<br>
+          <input size="8" name="RP" reset>current number of Research points<br>
+          <input size="5" name="R" reset>% you want to obtain<br>
+          <input size="8" name="RC" reset>Number of research centers<br>
+          <input size="8" name="cap" reset value="200">Your research cap (200%
+          by default, but race bonuses and artifacts may affect that)<br>
+          <br>
+          <input onclick=" 
+var nw=document.Research.nw.value; 
+var RP=document.Research.RP.value; 
+var R=document.Research.R.value; 
+var RC=document.Research.RC.value; 
+var cap=document.Research.cap.value;
+ 
+var need; 
+need=-((10*nw*Math.log(1-R/cap))/Math.log(2.718281828)) 
+ 
+var tick; 
+tick=RC*5; 
+var tick2; 
+tick2=need/tick; 
+ 
+document.Research.Points.value=Math.ceil(need); 
+document.Research.Time.value=Math.ceil(tick2); 
+return false" type="submit" value="Calculate"></p>
+          <p align="left">Research Points needed: <input size="12" name="Points" style="color: #FF0000; font-weight: bold; background-color: #0C1921; border-style: solid; border-color: #0C1921"><br>
+          Time
+          needed:<input size="5" name="Time" style="color: #FF0000; font-weight: bold; background-color: #0C1921; border-style: solid; border-color: #0C1921"></p>
+        </form>
+        <p align="left">
+        <br>
+        This will calculate what % research you will have in a certain amount of
+        time considering that your # of research centers stays the same and the
+        only networth difference is that of the Research points.<br>
+        <form name="Research2">
+          <p align="left"><input type="text" name="nw" size="10" reset>Networth<br>
+          <input type="text" name="RP" size="10" reset>current number of
+          Research points<br>
+          <input type="text" name="RC" size="10" reset>Number of research
+          centers<br>
+          Calculate for <input type="text" name="tick" size="6" reset>weeks<br>
+          <input size="8" name="capa" reset value="200">Your research cap (200%
+          by default, but race bonuses and artifacts may affect that)</p>
+          <p align="left"><br>
+          <input type="submit" value="Calculate" onclick=" 
+   
+var nw=document.Research2.nw.value; 
+var RP=document.Research2.RP.value; 
+var RC=document.Research2.RC.value; 
+var tick=document.Research2.tick.value; 
+var capa=document.Research2.capa.value;
+ 
+var total; 
+total=tick*RC*5-(-RP); 
+ 
+var percent; 
+percent=capa*(1-Math.pow(2.718281828,(-total/(10*(nw-((-RP)/1000)))))); 
+ 
+document.Research2.Total.value=Math.ceil(total); 
+document.Research2.Percent.value=Math.ceil(percent); 
+return false" /></p>
+          <p align="left">&nbsp;You will have:&nbsp;&nbsp; <input size="12" name="Total" style="background-color: #0C1921; color: #FF0000; font-weight: bold; border-style: solid; border-color: #0C1921">
+          research points<br>
+          Your % will be:&nbsp; <input name="Percent" size="5" style="background-color: #0C1921; color: #FF0000; font-weight: bold; border-style: solid; border-color: #0C1921" /></p>
+        </form>
+      </td>
+      <td width="7" background="pics/i43.jpg">&nbsp;</td>
+    </tr>
+  </tbody>
+</table>
+<table cellSpacing="0" cellPadding="0" width="90%" align="center" border="0">
+  <tbody>
+    <tr>
+      <td width="62"><img src="pics/i45.jpg" width="62" height="12"></td>
+      <td width="100%" background="pics/i47.jpg"><img src="i47.jpg" width="1" height="12"></td>
+      <td width="62"><img src="pics/i49.jpg" width="62" height="12"></td>
+    </tr>
+  </tbody>
+</table>
+</body>
