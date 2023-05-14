@@ -478,8 +478,6 @@ def council(request):
                "msg": msg}
     return render(request, "council.html", context)
     
-@login_required
-@user_passes_test(race_check, login_url="/choose_empire_race")
 def map(request):
     start_t = time.time()
 
@@ -582,6 +580,112 @@ def map(request):
                "rangeX" : range(0,maxX),
                "rangeY" : range(0,maxY)}
     return render(request, "map.html", context)
+
+def smap(request):
+    start_t = time.time()
+
+    status = get_object_or_404(UserStatus, user=request.user)
+    systems = System.objects.all().order_by('x', 'y')
+    mapgen = {}
+    settings = MapSettings.objects.filter(user=status.id)
+    maxX=0
+    maxY=0
+    for s in systems:
+        mapgen[s.x*10000+s.y]={"id" : s.id, "color" : (0,0,0), "type": random.randint(0,4), "x":s.x,"y":s.y, "imgarti" : ""}
+        if s.x>maxX:
+            maxX=s.x
+        if s.y>maxY:
+            maxY=s.y
+    
+    planets = Planet.objects.order_by('x','y','i')
+    scouted_planets = Scouting.objects.filter(user=request.user,  scout__gte=1.0)
+    scouted_planets_dict = {}
+    for scouted_planet in scouted_planets:
+        scouted_planets_dict[str(scouted_planet.planet.x)+","+str(scouted_planet.planet.y)+","+str(scouted_planet.planet.i)]=""
+
+    count = 0
+    ownercount = 0
+    pcount = 0
+    unexcount = 0
+    porcount = 0
+    factcount =0
+    scout_color =""
+    prevx=""
+    prevy=""
+    scoutgen=[]
+    for p in planets:
+        key=p.x*10000+p.y
+        if p.home_planet:
+            mapgen[key]["type"]=5
+        if p.x != prevx or p.y != prevy:
+            if count==pcount and count!=0:
+                print(str(prevx)+","+str(prevy)+" fully scanned:"+str(pcount))
+                scoutgen.append({"s": setting.map_setting, "x": prevx, "y": prevy, "color":hex_format(sum_tuple(scout_color,scout_color))})
+                
+            count = 0
+            ownercount = 0
+            pcount = 0
+            unexcount = 0
+            porcount = 0
+            factcount =0
+        prevx=p.x
+        prevy=p.y
+        count+=1 
+        for setting in settings:
+            color = color_code(setting.color_settings)
+            if setting.map_setting == "UE" and unexcount == 0:
+                if p.owner == None:
+                    unexcount += 1
+                    mapgen[key]["color"]=sum_tuple(color,mapgen[key]["color"])
+        
+            if setting.map_setting == "YP" and ownercount == 0:
+                if p.owner == status.user:
+                    ownercount += 1
+                    mapgen[key]["color"]=sum_tuple(color,mapgen[key]["color"])
+        
+            if setting.map_setting == "YR" and porcount == 0:
+                if p.owner == status.user and p.portal == True:
+                    porcount += 1
+                    scoutgen.append({"s": setting.map_setting, "x": p.x, "y": p.y, "color":hex_format(sum_tuple(color,color))})
+                
+            if setting.map_setting == "PF" and factcount == 0:
+                if p.owner != None and p.owner.id == setting.faction.id:
+                    factcount += 1
+                    mapgen[key]["color"]=sum_tuple(color,mapgen[key]["color"])
+        
+            if setting.map_setting == "SC":
+                if (str(p.x)+","+str(p.y)+","+str(p.i)) in scouted_planets_dict:
+                   pcount += 1
+                   scout_color=color
+
+    for s in systems:
+        key = s.x*10000+s.y
+        if mapgen[key]["color"] == (0,0,0):
+            mapgen[key]["color"]=(155,155,155)
+        mapgen[key]["color"]=hex_format(mapgen[key]["color"])
+        
+        
+    artis = Planet.objects.all().exclude(artefact=None)
+    narti = []
+    narti.clear()
+    for art in artis:
+        if status.id == 1:
+            mapgen[art.x*10000+art.y]["imgarti"]=art.artefact.image  
+        else:
+            if Scouting.objects.filter(user=request.user,  scout__gte=1.0,  planet=art).exists():
+                mapgen[art.x*10000+art.y]["imgarti"]=art.artefact.image  
+    context = {"status": status,
+               "round": RoundStatus.objects.filter().first,
+               "mapgen": mapgen,
+               "scoutgen": scoutgen, 
+               "narti": narti,
+               "systems": systems,
+               "maxX": maxX,
+               "maxY": maxY,
+               "page_title": "SMap",
+               "rangeX" : range(0,maxX),
+               "rangeY" : range(0,maxY)}
+    return render(request, "smap.html", context)
 
 @login_required
 @user_passes_test(race_check, login_url="/choose_empire_race")
